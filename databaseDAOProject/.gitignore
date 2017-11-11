@@ -1,0 +1,13 @@
+# This format is used by all the recent IDE versions by default. Here is what you need to share:
+# All the files under .idea directory in the project root except the workspace.xml and tasks.xml files which store user specific settings
+# All the .iml module files that can be located in different module directories (applies to IntelliJ IDEA)
+
+
+!.idea/
+.idea/workspace.xml
+.idea/tasks.xml
+!*.iml
+
+out/
+
+!lib/*.jar
