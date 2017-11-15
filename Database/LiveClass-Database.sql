@@ -61,3 +61,14 @@ INSERT INTO Privilege (privilegeNumber)
 	VALUES (0),
 				   (6),
                    (26);
+                   
+INSERT INTO CoursePrivilege(courseID, userID, privilegeID)
+	VALUES (1, 4, 1),
+				   (2, 5, 1),
+                   (2, 1, 2),
+                   (2, 2, 2),
+                   (2, 3, 2),
+                   (3, 1, 2),
+                   (3, 2, 2),
+                   (3, 3, 2),
+                   (4, 3, 2);
