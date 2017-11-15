@@ -5,7 +5,8 @@ import org.bytedeco.javacpp.avutil;
 import org.bytedeco.javacpp.opencv_core;
 import org.bytedeco.javacv.*;
 
-import static org.bytedeco.javacpp.opencv_core.cvFlip;
+// example from https://stackoverflow.com/questions/14070370/how-to-capture-and-record-video-from-webcam-using-javacv
+// example from https://gist.github.com/nikhil9/4032453
 
 public class CameraTest {
     public static final String FILENAME = "output.mp4";
