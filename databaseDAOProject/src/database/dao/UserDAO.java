@@ -17,7 +17,7 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
     private String tableName = "User";
 
     public UserDAO() {
-        this.dbName = "Lab11";
+        this.dbName = "LiveClass";
         genericDAO = new GenericDAO<>(this, dbName);
 
         fullColumnLabels = new ArrayList<>();
