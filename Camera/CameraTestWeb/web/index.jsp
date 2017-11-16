@@ -33,6 +33,7 @@
             console.log("Devices: ");
             console.log(videoDevices);
 //            console.log(audioDevices);
+            console.log(videoDevices[currentVideoDeviceIdx]);
             console.log(videoDevices[currentVideoDeviceIdx].deviceId);
         }
 
