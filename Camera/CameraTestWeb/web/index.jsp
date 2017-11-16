@@ -20,7 +20,9 @@
                 .then(function(MediaDeviceInfo) {
 //                    console.log(MediaDeviceInfo);
 //                    console.log(MediaDeviceInfo.facingMode);
-                    devices.push(MediaDeviceInfo.deviceId)
+                    MediaDeviceInfo.forEach((element, index) => {
+                        devices.push(element);
+                    });
                 });
             console.log(devices);
         }
