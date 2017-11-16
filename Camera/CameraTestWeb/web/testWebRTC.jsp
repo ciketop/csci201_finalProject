@@ -57,13 +57,20 @@
 //                    console.log(recordedBlob);
 //                    console.log(dataURL);
 //                window.open(dataURL);
-                    let link = document.createElement("downloadLink"); // Or maybe get it from the current document
-                    link.href = dataURL;
-                    link.download = "aDefaultFileName.mp4";
-                    link.innerHTML = "Click here to download the file";
-                    document.body.appendChild(link);
+                    saveData(dataURL, "aaa.mp4");
                 });
             });
+        }
+
+        function saveData(url, fileName) {
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+
+            a.style = "display: none";
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            window.URL.revokeObjectURL(url);
         }
     </script>
 </head>
