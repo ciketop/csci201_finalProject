@@ -54,9 +54,14 @@
                 var recordedBlob = recordRTC.getBlob();
                 recordRTC.getDataURL(function (dataURL) {
                     console.log("dataURL");
-                    console.log(recordedBlob);
+//                    console.log(recordedBlob);
 //                    console.log(dataURL);
 //                window.open(dataURL);
+                    let link = document.createElement("downloadLink"); // Or maybe get it from the current document
+                    link.href = dataURL;
+                    link.download = "aDefaultFileName.mp4";
+                    link.innerHTML = "Click here to download the file";
+                    document.body.appendChild(link);
                 });
             });
         }
