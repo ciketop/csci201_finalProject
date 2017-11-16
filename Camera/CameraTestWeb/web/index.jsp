@@ -18,34 +18,32 @@
 
         function init() {
             navigator.mediaDevices.enumerateDevices()
-                .then(function(MediaDeviceInfo) {
-//                    console.log(MediaDeviceInfo);
-//                    console.log(MediaDeviceInfo.facingMode);
+                .then(function (MediaDeviceInfo) {
                     MediaDeviceInfo.forEach((element) => {
                         if (element.kind.includes("videoinput")) {
+//                            console.log(element);
                             videoDevices.push(element);
                         }
-//                        else if (element.kind.includes("audio")) {
-//                            audioDevices.push(element);
-//                        }
+                        else if (element.kind.includes("audio")) {
+//                            console.log(element);
+                            audioDevices.push(element);
+                        }
                     });
+
+                    setUpCamera();
                 });
-            console.log("Devices: ");
-            console.log(videoDevices);
-//            console.log(audioDevices);
-            console.log(videoDevices[currentVideoDeviceIdx]);
-            console.log(videoDevices[currentVideoDeviceIdx].deviceId);
         }
 
         function setUpCamera() {
             let video = document.getElementById('video');
             let constraints = {
                 audio: true,
-                video: {
-                    deviceId: videoDevices[currentVideoDeviceIdx].deviceId,
-                    width: 1280,
-                    height: 720
-                }
+                video: videoDevices.length > 0
+                    ? {
+                        deviceId: videoDevices[currentVideoDeviceIdx].deviceId,
+                        width: 1280,
+                        height: 720
+                    } : false,
             };
 
 //            console.log(navigator.mediaDevices.getSupportedConstraints());
@@ -61,7 +59,7 @@
                     video.srcObject = stream;
                     video.onloadedmetadata = function (e) {
                         console.log(e);
-                        
+
                         video.play();
                     };
                 }).catch(function (err) {
@@ -91,13 +89,13 @@
                 context.drawImage(video, 0, 0, 640, 480);
             });
         }
-        
+
         function recordVideo() {
-            
+
         }
     </script>
 </head>
-<body onload="init(); setUpCamera()">
+<body onload="init();">
 <%--Ideally these elements aren't created until it's confirmed that the --%>
 <%--client supports video/camera, but for the sake of illustrating the --%>
 <%--elements involved, they are created with markup (not JavaScript)--%>
