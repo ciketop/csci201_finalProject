@@ -36,6 +36,8 @@
                     let video = document.querySelector('video');
                     video.srcObject = stream;
                     video.onloadedmetadata = function (e) {
+                        console.log(e);
+                        
                         video.play();
                     };
                 }).catch(function (err) {
