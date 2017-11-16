@@ -18,7 +18,8 @@
             // RecordRTC usage goes here
 
             var options = {
-                mimeType: 'video/webm', // or video/webm\;codecs=h264 or video/webm\;codecs=vp9
+//                mimeType: 'video/webm', // or video/webm\;codecs=h264 or video/webm\;codecs=vp9
+                mimeType: "video/webm\\;codecs=h264",
                 audioBitsPerSecond: 128000,
                 videoBitsPerSecond: 128000,
                 bitsPerSecond: 128000 // if this line is provided, skip above two
