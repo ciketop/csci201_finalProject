@@ -55,6 +55,7 @@
                     console.log("dataURL");
                     console.log(dataURL);
                     console.log(recordedBlob);
+                    window.open(dataURL);
                 });
             });
         }
