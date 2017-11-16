@@ -13,6 +13,17 @@
         // example from https://davidwalsh.name/browser-camera
         // tutorial: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
         let front = false;
+        let devices = [];
+
+        function init() {
+            navigator.mediaDevices.enumerateDevices()
+                .then(function(MediaDeviceInfo) {
+//                    console.log(MediaDeviceInfo);
+//                    console.log(MediaDeviceInfo.facingMode);
+                    devices.push(MediaDeviceInfo.deviceId)
+                });
+            console.log(devices);
+        }
 
         function setUpCamera(useFrontCamera = true) {
             navigator.mediaDevices.enumerateDevices()
@@ -30,6 +41,8 @@
                     height: 720
                 }
             };
+
+            console.log(navigator.mediaDevices.getSupportedConstraints());
 
             // Get access to the camera!
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -73,7 +86,7 @@
         }
     </script>
 </head>
-<body onload="setUpCamera()">
+<body onload="init(); setUpCamera()">
 <%--Ideally these elements aren't created until it's confirmed that the --%>
 <%--client supports video/camera, but for the sake of illustrating the --%>
 <%--elements involved, they are created with markup (not JavaScript)--%>
