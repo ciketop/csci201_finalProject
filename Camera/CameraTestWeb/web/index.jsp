@@ -14,14 +14,23 @@
         function setUpCamera() {
 
             // Grab elements, create settings, etc.
-            let video = document.getElementById('video');
+//            let video = document.getElementById('video');
+            let constraints = { audio: true, video: { width: 1280, height: 720 } };
 
             // Get access to the camera!
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 // Not adding `{ audio: true }` since we only want video now
-                navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function (stream) {
-                    video.src = window.URL.createObjectURL(stream);
-                    video.play();
+                navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+//                    video.src = window.URL.createObjectURL(stream);
+//                    video.play();
+
+                    let video = document.querySelector('video');
+                    video.srcObject = stream;
+                    video.onloadedmetadata = function(e) {
+                        video.play();
+                    };
+                }).catch(function(err) {
+                    console.log(err.name + ": " + err.message);
                 });
             }
         }
@@ -45,6 +54,7 @@
 <%--elements involved, they are created with markup (not JavaScript)--%>
 <video id="video" width="640" height="480" autoplay></video>
 <button id="snap" onclick="takePhoto()">Snap Photo</button>
+<button id="snap" onclick="takePhoto()">Record</button>
 <canvas id="canvas" width="640" height="480"></canvas>
 </body>
 </html>
