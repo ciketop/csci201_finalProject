@@ -24,14 +24,15 @@
                         devices.push(element);
                     });
                 });
+            console.log("Devices: ");
             console.log(devices);
         }
 
         function setUpCamera(useFrontCamera = true) {
-            navigator.mediaDevices.enumerateDevices()
-                .then(function(MediaDeviceInfo) {
-                    console.log(MediaDeviceInfo);
-                });
+//            navigator.mediaDevices.enumerateDevices()
+//                .then(function(MediaDeviceInfo) {
+//                    console.log(MediaDeviceInfo);
+//                });
 
             // Grab elements, create settings, etc.
 //            let video = document.getElementById('video');
@@ -44,7 +45,7 @@
                 }
             };
 
-            console.log(navigator.mediaDevices.getSupportedConstraints());
+//            console.log(navigator.mediaDevices.getSupportedConstraints());
 
             // Get access to the camera!
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
