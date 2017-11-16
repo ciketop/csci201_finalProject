@@ -70,7 +70,7 @@
 
         function flipCamera() {
             ++currentVideoDeviceIdx;
-            if (currentVideoDeviceIdx > videoDevices) {
+            if (currentVideoDeviceIdx >= videoDevices.length) {
                 currentVideoDeviceIdx = 0;
             }
             console.log(`videoDevices[${currentVideoDeviceIdx}] = ${videoDevices[currentVideoDeviceIdx]}`);
