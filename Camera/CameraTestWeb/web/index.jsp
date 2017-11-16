@@ -88,12 +88,15 @@
                 context.drawImage(video, 0, 0, 640, 480);
             });
         }
+
+        let rafId;
+
         function drawVideoFrame(time) {
             let canvas = document.getElementById('canvas');
             let context = canvas.getContext('2d');
             let video = document.getElementById('video');
 
-            requestAnimationFrame(drawVideoFrame);
+            rafId = requestAnimationFrame(drawVideoFrame);
             context.drawImage(video, 0, 0, 1280, 720);
             frames.push(canvas.toDataURL('image/webp', 1));
         }
@@ -101,6 +104,18 @@
         function recordVideo() {
 //            rafId = requestAnimationFrame(drawVideoFrame);
             drawVideoFrame(undefined);
+        }
+
+        function stopRecording() {
+            cancelAnimationFrame(rafId);  // Note: not using vendor prefixes!
+
+            // 2nd param: framerate for the video file.
+            let webmBlob = Whammy.fromImageArray(frames, 1000 / 60);
+
+            let video = document.createElement('video');
+            video.src = window.URL.createObjectURL(webmBlob);
+
+            document.body.appendChild(video);
         }
     </script>
 </head>
@@ -112,6 +127,7 @@
 <button id="flipCamera" onclick="flipCamera()">Flip Camera</button>
 <button id="snap" onclick="takePhoto()">Snap Photo</button>
 <button id="snap" onclick="recordVideo()">Record</button>
+<button id="snap" onclick="stopRecording()">Stop Record</button>
 <canvas id="canvas" width="640" height="480"></canvas>
 </body>
 </html>
