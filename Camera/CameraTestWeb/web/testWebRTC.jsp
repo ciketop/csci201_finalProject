@@ -13,8 +13,6 @@
     <script>
         // https://github.com/muaz-khan/WebRTC-Experiment/tree/master/RecordRTC
         var recordRTC;
-        let btnStopRecording = document.getElementById("btnStopRecording");
-        let video = document.getElementById('video');
 
         function successCallback(stream) {
             // RecordRTC usage goes here
@@ -46,6 +44,9 @@
 
         //        btnStopRecording.onclick = function () {
         function stopRecording() {
+            let btnStopRecording = document.getElementById("btnStopRecording");
+            let video = document.getElementById('video');
+
             recordRTC.stopRecording(function (audioVideoWebMURL) {
                 video.src = audioVideoWebMURL;
 
