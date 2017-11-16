@@ -40,7 +40,7 @@
             let constraints = {
                 audio: true,
                 video: {
-                    deviceId: videoDevices[currentVideoDevice],
+                    deviceId: videoDevices[currentVideoDeviceIdx].deviceId,
                     width: 1280,
                     height: 720
                 }
