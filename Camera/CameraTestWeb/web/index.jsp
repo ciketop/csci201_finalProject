@@ -15,6 +15,11 @@
         let front = false;
 
         function setUpCamera(useFrontCamera = true) {
+            navigator.mediaDevices.enumerateDevices()
+                .then(function(MediaDeviceInfo) {
+                    console.log(MediaDeviceInfo);
+                });
+
             // Grab elements, create settings, etc.
 //            let video = document.getElementById('video');
             let constraints = {
