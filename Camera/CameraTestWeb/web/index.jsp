@@ -124,7 +124,7 @@
 <%--Ideally these elements aren't created until it's confirmed that the --%>
 <%--client supports video/camera, but for the sake of illustrating the --%>
 <%--elements involved, they are created with markup (not JavaScript)--%>
-<video id="video" width="640" height="480" autoplay></video>
+<video id="video" width="1280" height="720" autoplay></video>
 <button id="flipCamera" onclick="flipCamera()">Flip Camera</button>
 <button id="snap" onclick="takePhoto()">Snap Photo</button>
 <button id="snap" onclick="recordVideo()">Record</button>
