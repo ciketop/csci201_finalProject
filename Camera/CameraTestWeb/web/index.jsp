@@ -90,6 +90,7 @@
         }
 
         let rafId;
+        let frames = [];
 
         function drawVideoFrame(time) {
             let canvas = document.getElementById('canvas');
