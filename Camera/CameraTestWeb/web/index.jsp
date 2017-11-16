@@ -12,7 +12,7 @@
     <script>
         // example from https://davidwalsh.name/browser-camera
         // tutorial: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-        let front = false;
+        let currentVideoDevice = 0;
         let videoDevices = [];
         let audioDevices = [];
 
@@ -22,11 +22,12 @@
 //                    console.log(MediaDeviceInfo);
 //                    console.log(MediaDeviceInfo.facingMode);
                     MediaDeviceInfo.forEach((element) => {
-                        if (element.kind.includes("video")) {
+                        if (element.kind.includes("videoinput")) {
                             videoDevices.push(element);
-                        } else if (element.kind.includes("audio")) {
-                            audioDevices.push(element);
                         }
+//                        else if (element.kind.includes("audio")) {
+//                            audioDevices.push(element);
+//                        }
                     });
                 });
             console.log("Devices: ");
@@ -34,18 +35,12 @@
             console.log(audioDevices);
         }
 
-        function setUpCamera(useFrontCamera = true) {
-//            navigator.mediaDevices.enumerateDevices()
-//                .then(function(MediaDeviceInfo) {
-//                    console.log(MediaDeviceInfo);
-//                });
-
-            // Grab elements, create settings, etc.
-//            let video = document.getElementById('video');
+        function setUpCamera() {
+            let video = document.getElementById('video');
             let constraints = {
                 audio: true,
                 video: {
-                    facingMode: (useFrontCamera ? "user" : "environment"),
+                    deviceId: videoDevices[currentVideoDevice],
                     width: 1280,
                     height: 720
                 }
@@ -60,7 +55,7 @@
 //                    video.src = window.URL.createObjectURL(stream);
 //                    video.play();
 
-                    let video = document.querySelector('video');
+//                    let video = document.querySelector('video');
                     video.srcObject = stream;
                     video.onloadedmetadata = function (e) {
                         console.log(e);
@@ -74,8 +69,12 @@
         }
 
         function flipCamera() {
-            front = !front;
-            setUpCamera(front);
+            ++currentVideoDevice;
+            if (currentVideoDevice > videoDevices) {
+                currentVideoDevice = 0;
+            }
+
+            setUpCamera();
         }
 
         function takePhoto() {
