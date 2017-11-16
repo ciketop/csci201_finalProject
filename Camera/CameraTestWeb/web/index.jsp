@@ -11,11 +11,20 @@
     <title>Camera Test</title>
     <script>
         // example from https://davidwalsh.name/browser-camera
-        function setUpCamera() {
+        // tutorial: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+        let front = false;
 
+        function setUpCamera(useFrontCamera = true) {
             // Grab elements, create settings, etc.
 //            let video = document.getElementById('video');
-            let constraints = { audio: true, video: { width: 1280, height: 720 } };
+            let constraints = {
+                audio: true,
+                video: {
+                    facingMode: (useFrontCamera ? "user" : "environment"),
+                    width: 1280,
+                    height: 720
+                }
+            };
 
             // Get access to the camera!
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -26,13 +35,18 @@
 
                     let video = document.querySelector('video');
                     video.srcObject = stream;
-                    video.onloadedmetadata = function(e) {
+                    video.onloadedmetadata = function (e) {
                         video.play();
                     };
-                }).catch(function(err) {
+                }).catch(function (err) {
                     console.log(err.name + ": " + err.message);
                 });
             }
+        }
+
+        function flipCamera() {
+            front = !front;
+            setUpCamera(front);
         }
 
         function takePhoto() {
@@ -46,6 +60,10 @@
                 context.drawImage(video, 0, 0, 640, 480);
             });
         }
+        
+        function recordVideo() {
+            
+        }
     </script>
 </head>
 <body onload="setUpCamera()">
@@ -53,8 +71,9 @@
 <%--client supports video/camera, but for the sake of illustrating the --%>
 <%--elements involved, they are created with markup (not JavaScript)--%>
 <video id="video" width="640" height="480" autoplay></video>
+<button id="flipCamera" onclick="flipCamera()">Flip Camera</button>
 <button id="snap" onclick="takePhoto()">Snap Photo</button>
-<button id="snap" onclick="takePhoto()">Record</button>
+<button id="snap" onclick="recordVideo()">Record</button>
 <canvas id="canvas" width="640" height="480"></canvas>
 </body>
 </html>
