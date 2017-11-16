@@ -32,7 +32,8 @@
                 });
             console.log("Devices: ");
             console.log(videoDevices);
-            console.log(audioDevices);
+//            console.log(audioDevices);
+            console.log(videoDevices[currentVideoDeviceIdx].deviceId);
         }
 
         function setUpCamera() {
