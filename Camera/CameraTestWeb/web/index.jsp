@@ -13,19 +13,25 @@
         // example from https://davidwalsh.name/browser-camera
         // tutorial: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
         let front = false;
-        let devices = [];
+        let videoDevices = [];
+        let audioDevices = [];
 
         function init() {
             navigator.mediaDevices.enumerateDevices()
                 .then(function(MediaDeviceInfo) {
 //                    console.log(MediaDeviceInfo);
 //                    console.log(MediaDeviceInfo.facingMode);
-                    MediaDeviceInfo.forEach((element, index) => {
-                        devices.push(element);
+                    MediaDeviceInfo.forEach((element) => {
+                        if (element.kind.includes("video")) {
+                            videoDevices.push(element);
+                        } else if (element.kind.includes("audio")) {
+                            audioDevices.push(element);
+                        }
                     });
                 });
             console.log("Devices: ");
-            console.log(devices);
+            console.log(videoDevices);
+            console.log(audioDevices);
         }
 
         function setUpCamera(useFrontCamera = true) {
