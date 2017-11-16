@@ -12,6 +12,7 @@
     <script>
         // example from https://davidwalsh.name/browser-camera
         // tutorial: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+        // https://www.html5rocks.com/en/tutorials/getusermedia/intro/
         let currentVideoDeviceIdx = 0;
         let videoDevices = [];
         let audioDevices = [];
@@ -46,11 +47,8 @@
                     } : false,
             };
 
-//            console.log(navigator.mediaDevices.getSupportedConstraints());
-
             // Get access to the camera!
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                // Not adding `{ audio: true }` since we only want video now
                 navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
 //                    video.src = window.URL.createObjectURL(stream);
 //                    video.play();
@@ -73,7 +71,6 @@
             if (currentVideoDeviceIdx >= videoDevices.length) {
                 currentVideoDeviceIdx = 0;
             }
-            console.log(`videoDevices[${currentVideoDeviceIdx}] = ${videoDevices[currentVideoDeviceIdx]}`);
 
             setUpCamera();
         }
