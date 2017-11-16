@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>$Title$</title>
+    <title>WebRTC Lib Test</title>
     <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
     <script>
         // https://github.com/muaz-khan/WebRTC-Experiment/tree/master/RecordRTC
@@ -27,15 +27,22 @@
             };
             recordRTC = RecordRTC(stream, options);
             recordRTC.startRecording();
+            console.log(recordRTC);
         }
 
         function errorCallback(error) {
             // maybe another application is using the device
+            console.log("errorCallback");
+            console.log(error);
         }
 
-        var mediaConstraints = {video: true, audio: true};
+        let mediaConstraints = {video: true, audio: true};
 
-        navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
+        function init() {
+            console.log("init");
+            navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
+        }
+
 
         //        btnStopRecording.onclick = function () {
         function stopRecording() {
@@ -49,7 +56,7 @@
         }
     </script>
 </head>
-<body>
+<body onload="init();">
 <video id="video" width="640" height="360" autoplay></video>
 <button id="flipCamera" onclick="flipCamera()">Flip Camera</button>
 <button id="snap" onclick="takePhoto()">Snap Photo</button>
