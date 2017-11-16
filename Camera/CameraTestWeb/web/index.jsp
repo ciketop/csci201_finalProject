@@ -9,6 +9,8 @@
 <html>
 <head>
     <title>Camera Test</title>
+
+    <script src="${pageContext.request.contextPath}/lib/whammy.js"></script>
     <script>
         // example from https://davidwalsh.name/browser-camera
         // tutorial: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
@@ -86,9 +88,19 @@
                 context.drawImage(video, 0, 0, 640, 480);
             });
         }
+        function drawVideoFrame(time) {
+            let canvas = document.getElementById('canvas');
+            let context = canvas.getContext('2d');
+            let video = document.getElementById('video');
+
+            requestAnimationFrame(drawVideoFrame);
+            context.drawImage(video, 0, 0, 1280, 720);
+            frames.push(canvas.toDataURL('image/webp', 1));
+        }
 
         function recordVideo() {
-
+//            rafId = requestAnimationFrame(drawVideoFrame);
+            drawVideoFrame(undefined);
         }
     </script>
 </head>
