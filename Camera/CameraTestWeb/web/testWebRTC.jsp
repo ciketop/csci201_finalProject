@@ -50,14 +50,10 @@
 
             recordRTC.stopRecording(function (audioVideoWebMURL) {
                 video.src = audioVideoWebMURL;
-//                window.open(audioVideoWebMURL);
 
                 var recordedBlob = recordRTC.getBlob();
                 recordRTC.getDataURL(function (dataURL) {
                     console.log("dataURL");
-//                    console.log(recordedBlob);
-//                    console.log(dataURL);
-//                window.open(dataURL);
                     saveData(dataURL, "aaa.mp4");
                 });
             });
