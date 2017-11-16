@@ -12,7 +12,7 @@
     <script>
         // example from https://davidwalsh.name/browser-camera
         // tutorial: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-        let currentVideoDevice = 0;
+        let currentVideoDeviceIdx = 0;
         let videoDevices = [];
         let audioDevices = [];
 
@@ -69,10 +69,11 @@
         }
 
         function flipCamera() {
-            ++currentVideoDevice;
-            if (currentVideoDevice > videoDevices) {
-                currentVideoDevice = 0;
+            ++currentVideoDeviceIdx;
+            if (currentVideoDeviceIdx > videoDevices) {
+                currentVideoDeviceIdx = 0;
             }
+            console.log(`videoDevices[${currentVideoDeviceIdx}] = ${videoDevices[currentVideoDeviceIdx]}`);
 
             setUpCamera();
         }
