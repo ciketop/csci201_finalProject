@@ -8,7 +8,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
  
 <meta charset="UTF-8">
-<title>Web Scoket Chat Client</title>
+
+<title>Web Socket Chat Client</title>
+
 <script>
 	var socket;
 	function connectToServer(){
@@ -45,6 +47,17 @@
 </head>
 <body onload="connectToServer()">
 
+<nav class="transparent z-depth-0">
+	    		<div class="nav-wrapper">
+	      		<font id = "titleChat">LiveClass</font>
+	      		<ul class="right hide-on-med-and-down">
+	      		<li><a href="index.html" id="navBtns">Home</a></li>
+	        	 	<li><a href="login.html" id="navBtns">Login</a></li>
+	      			<!-- <li><a href="index.html" id="navBtns" class="waves-effect waves-light btn">Home</a></li>
+	        			<li><a href="login.html" id="navBtns" class="waves-effect waves-light btn">Login</a></li> -->
+	      		</ul>
+	    		</div>
+	  	</nav> 
 
   
 <div id="chatbox"> 
@@ -52,7 +65,9 @@
 		<div id="chattextarea">
 			<form name="chatform" onsubmit="return sendMessage();">
 				<input id="myArea" type="text" name="message" placeholder="Type here..">
-				<input id="button1" type="submit" name="submit" value="Send Message" />
+
+				<input class = "btn" id="button1" type="submit" name="submit" value="Send Message" />
+
 					
 			</form>
 		</div>
