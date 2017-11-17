@@ -17,7 +17,7 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
     private String tableName = "User";
 
     public UserDAO() {
-        this.dbName = "Lab11";
+        this.dbName = "LiveClass";
         genericDAO = new GenericDAO<>(this, dbName);
 
         fullColumnLabels = new ArrayList<>();
@@ -56,7 +56,7 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
         PreparedStatement ps = null;
 
         try {
-            connection = ConnectionFactory.getConnection("Lab10");
+            connection = ConnectionFactory.getConnection("LiveClass");
 
             int psParamIdx = 0;
             ps = connection.prepareStatement("SELECT * FROM User WHERE userID = ?");
@@ -87,7 +87,40 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
 
     @Override
     public List<User> findByUsername(String username) {
-        return null;
+    	List<User> users = new ArrayList<>();
+
+        Connection connection = null;
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+
+        try {
+            connection = ConnectionFactory.getConnection("LiveClass");
+
+            int psParamIdx = 0;
+            ps = connection.prepareStatement("SELECT * FROM User WHERE username = ?");
+            ps.setString(++psParamIdx, username);
+
+            // query database
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                User user = new User();
+
+                user.setUserID(rs.getInt("userID"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+
+                users.add(user);
+            }
+
+            return users;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        } finally {
+            // close all connection
+            ConnectionFactory.closeConnection(rs, ps, null, connection);
+        }
     }
 
     @Override
