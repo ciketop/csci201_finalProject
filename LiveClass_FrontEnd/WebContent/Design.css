@@ -141,6 +141,45 @@ input[type=password] {
 	text-align: center;
 	color: #edecee;
 }
+#chatbox{
+  
+  width: 600px;
+    position: fixed;
+    height: 70%;
+overflow: auto;
+    right: 0px;
+    top: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid rgba(29, 49, 91, .3);
+  
+    margin-top:2cm;
+    background-color: white;
+}
+#chattextarea{
+  
+   position:fixed;
+   bottom:0;
+    height:75px;
+    width:50%;
+  
+  border-top: thick double;
+  
+ 
+}
+input, textarea {
+    font-size:12px; 
+    width:57%; 
+    
+ 
+    padding: 15px 32px;
+    margin:0 ;
+}
+#button1{
+  background-color: #4CAF50;
+  padding: 15px 32px;
+  width:25%;
+}
 
 h4, label{
 color: #fff;
