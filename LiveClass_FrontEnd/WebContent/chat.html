@@ -31,9 +31,12 @@
 		var d = new Date();
 		var n = d.toLocaleTimeString();
 		n=n.substring(0,4);
+		if(document.chatform.message.value !=""){
 		socket.send(n + " - User: " + document.chatform.message.value); //need to change User to login user
 		document.getElementById("myArea").value = "";
+	}
 		return false; 
+
 	}
 	
 	
@@ -41,6 +44,7 @@
 </script>
 </head>
 <body onload="connectToServer()">
+
 
   
 <div id="chatbox"> 
