@@ -408,6 +408,8 @@ input, textarea {
   left: 30%;
   position: absolute;
   width: 35%;
+  height: 29%;
+  padding: 3px 10px 10px 10px;
 
 }
 
