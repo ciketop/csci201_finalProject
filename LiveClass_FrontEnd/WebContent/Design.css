@@ -1,5 +1,75 @@
 @import url(https://fonts.googleapis.com/css?family=Arvo:700);
 @import url(https://fonts.googleapis.com/css?family=Righteous);
+ 
+.background{
+position: fixed;
+
+  top: 0;
+  background-image: url('http://www.usailighting.com/stuff/contentmgr/files/0/12c8de285540de6f50cab6c12d65bd4a/image/nyu_college_of_dentistry_01.jpg');
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+   background-attachment: fixed;
+  filter: opacity(40%) grayscale(10%) blur(2px);
+  background-size: 1500px 1000px;
+}
+
+.background1{
+position: fixed;
+
+  top: 0;
+  background-image: url('https://alumni.usc.edu/wp-content/uploads/2016/04/2015105_USC_Spring_2015_1529.jpg');
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+   background-attachment: fixed;
+  filter: opacity(20%) grayscale(10%) blur(2px) hue-rotate(210deg);
+  background-size: 2000px 800px;
+  
+}
+.content{
+	position: fixed; 
+  left: 0;
+  right: 0;
+  z-index: 9999;
+	margin-left: 20px;
+  margin-right: 20px; 
+}
+
+
+h2 { 
+   position: absolute; 
+   top: 390px; 
+   left: 300px;
+   width: 50%; 
+}
+
+h3 { 
+   position: absolute; 
+   top: 480px; 
+   left: 300px;
+   width: 50%; 
+} 
+
+
+#nav{
+	bottom: 200px;
+
+	
+}
+
+#picture{
+	/* width: 652.3px; */
+	height: 350px; 
+	width: 50%;
+	filter: opacity(60%);
+	float: left;
+	/* left: 200px; */
+	
+}
+
 
 #menuButton {
 	background-color: #9cdad6;
@@ -10,71 +80,162 @@
 }
 
 #navBtns{
-	background-color: #9cdad6;
-	border-radius: 8px;
 	font-family:'Righteous', serif;
+	color: #000062;
+	font-size: 20px;
+	margin-right: 15px;
 }
-
+ 
 #title {
+	text-shadow: .03em .03em 0 #000062;
+	 background-color: white;
+ 	color: #000062;
+	
 	font-size: 100px;
-}
+	
+	 background-image:
+      linear-gradient(
+        45deg,
+        transparent 45%,
+        #000062 45%,
+        #000062 55%,
+        transparent 0
+        );
+    background-size: .05em .05em;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  
+    animation: shad-anim 50s linear infinite;
+    
+    
+	text-align: center;
+ 
+  color: #000062;
+  font-family: 'Righteous', serif; 
+
+ 
+margin-left: 8px;
+  margin-right: 20px; 
+    
+	
+
+} 
+
+	
 
 #welcome {
-	color: #f5f6ff;
+	color: white;
 	 font-family:'Cookie',cursive;
 	letter-spacing: 5px;
 	font-weight: bold;
-	font-size: 300%;
-	border-radius: 20px;
+	font-size: 450%;
+/* 	border-radius: 20px; */
 	background-color: #000062;
 	text-align: center;
-}
-
-#description {
-	color: #f5f6ff;
-	font-family:'Righteous', serif;
-	letter-spacing: 5px;
-	font-weight: bold;
-	font-size: 50%;
-	border-radius: 20px;
-	background-color: #000062;
-	text-align: center;
-
-}
-
-#viewLecturesButton {
-	font-family: Arial;
-  	color: #ffffff;
-  	font-size: 10px;
-	background-color: #9cdad6;
- 	box-shadow: 11px 9px 8px #304261;	
- 	border-radius: 7px;
-	background-image: -webkit-linear-gradient(top, #9cdad6, #90bbb9);
+	filter: opacity(80%);
+	
 	
 }
 
+#description {
+	color: #161617;
+	font-family:'Righteous', serif;
+	letter-spacing: 5px;
+	font-weight: bold;
+	font-size: 150%;
+	/* border-radius: 20px; */
+	background-color: transparent;
+	text-align: center;
+	padding: 5px; 
+	width: 60%;
+	left: 20%;
+	
+
+} 
+
+#viewLecturesButton {
+	position: absolute;
+	font-family: Arial;
+  	color: #ffffff;
+  	font-size: 10px;
+ 	box-shadow: 11px 9px 8px #304261;	
+	background-image: -webkit-linear-gradient(top, #5662b2, #000062);
+	filter: opacity(80%);
+	left:42%;
+	top: 100%;
+} 
+
+
+#loginTitle {
+	text-shadow: .03em .03em 0 #000062;
+	 background-color: white;
+ 	color: #000062;
+	padding: 10px;
+	font-size: 100px;
+	position: fixed;
+	 background-image:
+      linear-gradient(
+        45deg,
+        transparent 45%,
+        #000062 45%,
+        #000062 55%,
+        transparent 0
+        );
+    background-size: .05em .05em;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  
+    animation: shad-anim 50s linear infinite;
+    
+    top: -20px;
+	text-align: center;
+  display: inline-block;
+  color: #000062;
+  font-family: 'Righteous', serif; 
+
+  
+  right:20px;
+  left: -20px;
+    
+    }
+
+@keyframes shad-anim {
+  0% {background-position: 0 0}
+  0% {background-position: 100% -100%}
+  } 
+
 #login{
-	/* background-color: #000062; */
-	border-radius: 15px;
+	background-color: white;
+	border-radius: 5px;
+	padding: 30px;
+	position: absolute;
+	left:29%;
+	width: 500px;
+	height: 300px; 
+	top: 115%;
+
 }
 
 #loginButton{
 	-webkit-border-radius: 7;
   -moz-border-radius: 7;
-  border-radius: 7px;
+  border-radius: 1px;
   font-family:'Righteous', serif;
   color: #ffffff;
   font-size: 16px;
   padding: 3px 10px 10px 10px;
   border: solid #ffffff 1px;
   text-decoration: none;
-  background-color: #9cdad6;
-  left: 30px;
+  background-color: #000062;
+  left: 1%;
+  position: absolute;
+  top: -20px;
+
   
 }
 
 #loginLabel{
-	  color: #edecee;
+	  color: #000062;
 	  font-size: 20px;
 	  
 	
@@ -83,12 +244,12 @@
 
 input[type=text] {
 	font-family: Courier New;
-    color: #edecee;
+    color: black;
 }
 
 input[type=password] {
 	font-family: Courier New;
-    color: #edecee;
+    color: black;
 }
 
 .btn:hover{
@@ -137,63 +298,25 @@ input[type=password] {
 	font-weight: bold;
 	font-size: 100%;
 	border-radius: 20px;
-	/* background-color: #000062; */
+	background-color: #000062;
 	text-align: center;
-	color: #edecee;
-}
-#chatbox{
-  
-  width: 600px;
-    position: fixed;
-    height: 70%;
-overflow: auto;
-    right: 0px;
-    top: 0px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border: 1px solid rgba(29, 49, 91, .3);
-  
-    margin-top:2cm;
-    background-color: white;
-}
-#chattextarea{
-  
-   position:fixed;
-   bottom:0;
-    height:75px;
-    width:50%;
-  
-  border-top: thick double;
-  
- 
-}
-input, textarea {
-    font-size:12px; 
-    width:57%; 
-    
- 
-    padding: 15px 32px;
-    margin:0 ;
-}
-#button1{
-  background-color: #4CAF50;
-  padding: 15px 32px;
-  width:25%;
-}
+	color: white;
+} 
+
+
 
 h4, label{
-color: #fff;
+	color: #000062;
   font-family: 'Righteous', serif;
   font-weight: bold; 
-  text-shadow:
-    -3px -3px 0 hsla(230,40%,50%,1), 
-     3px -3px 0 hsla(230,40%,50%,1), 
-    -3px 3px 0 hsla(230,40%,50%,1),
-    3px 3px 0 hsla(230,40%,50%,1),
-    4px 4px 0 #fff, 
-    5px 5px 0 #fff, 
-    3px 3px 0 #fff, 
-	3px 3px 0 #fff; 
+   text-shadow:
+   1px 1px 0 white,
+   2px 2px 0 white,
+   3px 3px 0 white,
+    4px 4px 0 #b8b8b8,
+    5px 5px 0 #b8b8b8;
+
+	
 	line-height: 0.2em;
   letter-spacing: 0.3em;
   transform: scaleY(0.7);
@@ -204,20 +327,20 @@ color: #fff;
 }
 
 tbody tr:nth-child(odd) {
-  /*  background-color: #88a5a5; */
+   background-color: #b7c0e2;
 }
 tbody tr:nth-child(even) {
-   /* background-color: #9cbebe; */
+   background-color: #93a1c6;
 }
 
 tbody tr:hover {
-   background-color: #a5cbc6;
-} 
+   background-color: #000062;
+}  
 
  
 
   
-/* Title Animation*/ 
+Title Animation 
   
   
 
@@ -226,13 +349,13 @@ tbody tr:hover {
   padding: 0;
   box-sizing: border-box;
   position: relative;
-  }
+  } 
 
 html, body {
   
   }
   body {
-    background-color: hsla(230,40%,50%,1);
+    background-color: #f6f7fa;
     }
   body:before {
     content: '';
@@ -241,30 +364,32 @@ html, body {
     font-size: 0;
   	height: 100%; 
     } 
-
+/* 
 font {
+	top: -20px;
 	text-align: center;
   display: inline-block;
-  color: white;
+  color: #000062;
   font-family: 'Righteous', serif; 
   font-size: 10em;  
-  text-shadow: .03em .03em 0 #000062;
+  text-shadow: .03em .03em 0 white;
   right:20px;
-  left: 20px;
+  left: -20px;
   }
   font:after {
+  background-color: white;
   text-align: center;
     content: attr(data-shadow);
     position: absolute;
-    top: .06em; left: .06em;
+   top: .08em; left: .06em; 
     z-index: -1;
     text-shadow: none;
     background-image:
       linear-gradient(
         45deg,
         transparent 45%,
-        hsla(48,20%,90%,1) 45%,
-        hsla(48,20%,90%,1) 55%,
+        #000062 45%,
+        #000062 55%,
         transparent 0
         );
     background-size: .05em .05em;
@@ -272,9 +397,10 @@ font {
     -webkit-text-fill-color: transparent;
   
     animation: shad-anim 15s linear infinite;
+
     }
 
 @keyframes shad-anim {
   0% {background-position: 0 0}
   0% {background-position: 100% -100%}
-  }
+  }  */
