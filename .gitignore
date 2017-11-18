@@ -1,4 +1,5 @@
 # Eclipse
+build/
 .metadata
 bin/
 tmp/
@@ -57,7 +58,7 @@ local.properties
 *.iws
  
 # Mac
-.DS_Store
+*.DS_Store
  
 # Maven
 log/
