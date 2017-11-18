@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+   <head>
+   
+   <link rel="stylesheet" type="text/css" href="Design.css" />
+ <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" type="text/css" href="css/materialize.css" />
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  
+  <script>
+  	function validate() {
+  		var xhttp = new XMLHttpRequest();
+  		/* var uname = document.getElementById("uname").value;
+  		var psw = document.getElementById("psw").value; */
+  		var uname = document.loginForm.uname.value;
+  		var psw = document.loginForm.psw.value;
+        	xhttp.open("GET", "validate.jsp?username=" + uname + "&password=" + psw, false);
+        	xhttp.send();
+  	  	if (xhttp.responseText.trim().length > 0) {
+  	  	  console.log("response: " + xhttp.responseText)
+          document.getElementById("err").innerHTML = xhttp.responseText;
+          console.log("Returning false");
+          return false;
+        }
+  	  	console.log("Returning true");
+        return true;
+  	}
+  </script>
+   </head>
+   
+   <body>
+   
+	  <div class="background"></div>
+	  <div class="content">
+
+	  <!-- <nav class="transparent z-depth-0">
+	    		<div class="nav-wrapper">
+	      		<font data-shadow='LiveClass' id = "title">LiveClass</font>
+	      		<ul class="right hide-on-med-and-down">
+	      		<li><a href="index.html" id="navBtns">Home</a></li>
+	        	 	<li><a href="" id="navBtns">Login</a></li>
+	      			<li><a href="index.html" id="navBtns" class="waves-effect waves-light btn">Home</a></li>
+	        			<li><a href="login.html" id="navBtns" class="waves-effect waves-light btn">Login</a></li>
+	      		</ul>
+	    		</div>
+	  	</nav>  -->
+
+	  
+ 	 <a href="index.html" id = "loginTitle">LiveClass</a>
+	  	
+	  	<div class = "row"></div>
+	  	<div class = "row"></div>
+	  	<div class = "row"></div>
+	  	<div class = "row"></div>
+	  	<div class = "row"></div>
+
+	  	<div class = "row"><span id="err"></span></div>
+	  	<div class="row">
+	  	
+	  		
+	  		<div class="col s12" id = "login">
+	  			<form name="loginForm" method="POST" action="queryClasses" onsubmit="return validate()">
+		  			<label class="col s12" id = "loginLabel"><b>Username</b></label>
+		  			<div class="row"></div>
+	    				<input type="text" placeholder="Enter Username" name="uname" required>
+					<div class="row"></div>
+	    				<label class="col s12" id = "loginLabel"><b>Password</b></label>
+	    				<div class="row"></div>
+	    				<input type="password" placeholder="Enter Password" name="psw" required>
+					<div class="row"></div>
+					<div class="col s12 push-s5">	
+	    				<button class="btn" id = "loginButton" type="submit">Login</button>
+	    				<input type="checkbox" checked="checked">
+	  				</div>
+	  			</form>
+  			</div>
+  			
+  			
+	  		
+	  		
+	  	</div>
+  
+	</div>
+  </body>
+</html>
