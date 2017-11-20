@@ -53,13 +53,27 @@
 		</script>
 	</head>
 	<body onload="connectToServer()">
+	<%
+		User currUser = (User) request.getSession().getAttribute("user");
+	%>
 	
 		<nav class="transparent z-depth-0">
 	    		<div class="nav-wrapper">
 	      		<font id = "titleChat">LiveClass</font>
 	      		<ul class="right hide-on-med-and-down">
-	      		<li><a href="index.html" id="navBtns">Home</a></li>
+	      		<li><a href="index.jsp" id="navBtns">Home</a></li>
+	      	<%
+	      		if(currUser == null) {
+	      	%>
 	        	 	<li><a href="login.html" id="navBtns">Login</a></li>
+	        	 <%
+	      		}
+	      		else {
+	        	 %>
+	        	 	<li><a href="logout.jsp">Logout</a></li>
+	        	 <%
+	      		}
+	        	 %>
 	      			<!-- <li><a href="index.html" id="navBtns" class="waves-effect waves-light btn">Home</a></li>
 	        			<li><a href="login.html" id="navBtns" class="waves-effect waves-light btn">Login</a></li> -->
 	      		</ul>
@@ -70,7 +84,6 @@
 			<div id="mychat"></div>
 			
 			<%
-				User currUser = (User) request.getSession().getAttribute("user");
 				if(currUser != null) {
 					String name = currUser.getFname();
 			%>
