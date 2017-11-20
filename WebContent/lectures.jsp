@@ -66,7 +66,7 @@
 		                     
 		               %>
 		                  <tr>
-		                     <td><%= prefix + " " + number + " - " + name %></td>
+		                     <td><a href="chat.jsp"><%= prefix + " " + number + " - " + name %></a></td>
 		   
 		                  </tr>
 		               <%
@@ -103,7 +103,7 @@
 		                     
 		               %>
 		                  <tr>
-		                     <td><%= prefix + " " + number + " - " + name %></td>
+		                     <td><a href="chat.jsp"><%= prefix + " " + number + " - " + name %></a></td>
 		   
 		                  </tr>
 		               <%
