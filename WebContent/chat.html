@@ -14,7 +14,7 @@
 <script>
 	var socket;
 	function connectToServer(){
-		socket = new WebSocket("ws://localhost:8080/websocketexample/chatroom");
+		socket = new WebSocket("ws://localhost:8080/csci201_finalProject/chatroom");
 		socket.onopen = function(event){
 			document.getElementById("mychat").innerHTML +=" User connected!<br />";
 		}

@@ -24,7 +24,7 @@ public class GenericDAO<T> implements GenericDAOTemplate<T> {
     private GenericDAO(Factory<T> factory) {
         this.factory = factory;
 
-        this.dbName = "Lab11";
+        this.dbName = "LiveClass";
     }
 
     public GenericDAO(Factory<T> factory, String dbName) {
