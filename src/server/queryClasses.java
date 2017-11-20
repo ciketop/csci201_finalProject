@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import database.object.Course;
+import database.object.User;
 
 /**
  * Servlet implementation class queryClasses
@@ -30,7 +31,9 @@ public class queryClasses extends HttpServlet {
 		List<Course> courses = new ArrayList<Course>();
 		List<Course> publicCourse = new ArrayList<Course>();
 		
-		int userID = (int)request.getSession().getAttribute("userID");
+//		int userID = (int)request.getSession().getAttribute("userID");
+		User currUser = (User)request.getSession().getAttribute("user");
+		int userID = currUser.getUserID();
 		
 		System.out.println("In servlet");
 		
