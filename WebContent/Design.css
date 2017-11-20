@@ -30,7 +30,19 @@ position: fixed;
   
 }
 .content{
-	position: fixed; 
+	position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+	margin-left: 20px;
+  margin-right: 20px; 
+}
+
+.lecContent{
+	height: 100%;
+	position: fixed;
+	overflow-y:scroll;
+	/* overflow: auto; */
   left: 0;
   right: 0;
   z-index: 9999;
@@ -340,6 +352,9 @@ tbody tr:hover {
    background-color: #000062;
 }  
 
+table {
+	overflow: scroll;
+}
  
 
   

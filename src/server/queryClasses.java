@@ -28,6 +28,7 @@ public class queryClasses extends HttpServlet {
        
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Course> courses = new ArrayList<Course>();
+		List<Course> publicCourse = new ArrayList<Course>();
 		
 		int userID = (int)request.getSession().getAttribute("userID");
 		
@@ -59,6 +60,43 @@ public class queryClasses extends HttpServlet {
 				}
 			}
 			
+		} catch (SQLException sqle) {
+			System.out.println ("SQLException: " + sqle.getMessage());
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println ("ClassNotFoundException: " + cnfe.getMessage());
+		} finally {
+			try {
+				if (courseID != null) courseID.close();
+				if(courseDetail != null) courseDetail.close();
+				if (st != null) st.close();
+				if (ps != null) ps.close();
+				if (conn != null) conn.close();
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+		request.getSession().setAttribute("courses", courses);
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LiveClass?user=root&password=root&useSSL=false");
+			st = conn.createStatement();
+			ps = conn.prepareStatement("SELECT * from Course WHERE courseID=?");
+			
+			courseID = st.executeQuery("SELECT * from PublicCourse");
+			while(courseID.next()) {
+				int ID = courseID.getInt("courseID");
+				ps.setInt(1, ID);
+				courseDetail = ps.executeQuery();
+				while(courseDetail.next()) {
+					String prefix = courseDetail.getString("coursePrefix");
+					String number = courseDetail.getString("courseNumber");
+					String name = courseDetail.getString("courseName");
+					System.out.println("Queried: " + prefix + " " + number + " - " + name);
+					Course newCourse = new Course(userID, prefix, number, name);
+					publicCourse.add(newCourse);
+				}
+			}
 			
 		} catch (SQLException sqle) {
 			System.out.println ("SQLException: " + sqle.getMessage());
@@ -66,26 +104,17 @@ public class queryClasses extends HttpServlet {
 			System.out.println ("ClassNotFoundException: " + cnfe.getMessage());
 		} finally {
 			try {
-				if (courseID != null) {
-					courseID.close();
-				}
-				if(courseDetail != null) {
-					courseDetail.close();
-				}
-				if (st != null) {
-					st.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
+				if (courseID != null) courseID.close();
+				if(courseDetail != null) courseDetail.close();
+				if (st != null) st.close();
+				if (ps != null) ps.close();
+				if (conn != null) conn.close();
 			} catch (SQLException sqle) {
 				System.out.println("sqle: " + sqle.getMessage());
 			}
 		}
-		request.getSession().setAttribute("courses", courses);
+		request.getSession().setAttribute("publicCourse", publicCourse);
+		
 		
 		String nextJSP = "/lectures.jsp";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);

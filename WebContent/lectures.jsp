@@ -16,11 +16,12 @@
 
 	<body>
 	<%
-      List<Course> userCourses = (List)request.getSession().getAttribute("courses");
-   	%>
+      List<Course> userCourses = (List<Course>)request.getSession().getAttribute("courses");
+	  List<Course> publicCourse = (List<Course>)request.getSession().getAttribute("publicCourse");
+	%>
 	
 		<div class="background1"></div>
-		<div class="content">
+		<div class="lecContent">
 			<nav class="transparent z-depth-0">
 			<div class="nav-wrapper">
 				<font id="title">LiveClass</font>
@@ -92,16 +93,24 @@
 						</thead>
 	
 						<tbody>
-							<tr>
-								<td>CSCI 104 Data Structures and Software Development</td>
-	
-	
-							</tr>
-							<tr>
-								<td>CSCI 103 Introduction to Programming</td>
-	
-							</tr>
-						</tbody>
+		               <% 
+		               //blah blah
+		                  for(int i = 0; i < publicCourse.size(); i++) {
+		                     Course currCourse = publicCourse.get(i);
+		                     String prefix = currCourse.getCoursePrefix();
+		                     String number = currCourse.getCourseNumber();
+		                     String name = currCourse.getCourseName();
+		                     
+		               %>
+		                  <tr>
+		                     <td><%= prefix + " " + number + " - " + name %></td>
+		   
+		                  </tr>
+		               <%
+		                  }
+		               %>
+		   
+		               </tbody>
 					</table>
 	
 				</div>
