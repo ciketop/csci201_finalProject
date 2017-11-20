@@ -12,8 +12,6 @@
   <script>
   	function validate() {
   		var xhttp = new XMLHttpRequest();
-  		/* var uname = document.getElementById("uname").value;
-  		var psw = document.getElementById("psw").value; */
   		var uname = document.loginForm.uname.value;
   		var psw = document.loginForm.psw.value;
         	xhttp.open("GET", "validate.jsp?username=" + uname + "&password=" + psw, false);
@@ -59,15 +57,20 @@
 	    				<input type="password" placeholder="Enter Password" name="psw" required>
 					<div class="row"></div>
 					<div class="col s12 push-s5">	
-	    				<button class="btn" id = "loginButton" type="submit">Login</button>
-	    				<input type="checkbox" checked="checked">
+		    				<button class="btn" id = "loginButton" type="submit">Login</button>
 	  				</div>
 	  			</form>
+	  			<form name="createAccount" method="POST" action="CreateAccount.jsp">
+		  			<div class="col s12 push-s5">
+		  				<div class="row"></div>
+			    			<div class="row"></div>
+		  				<div class= "col s12" id="createAccount">Don't have an account?</div>
+			    			<button id="createAccountButton" type="submit">Create Account</button>
+			    			<input type="checkbox" checked="checked">
+			    		</div>
+	  			</form>
   			</div>
-  			
-  			
-	  		
-	  		
+
 	  	</div>
   
 	</div>

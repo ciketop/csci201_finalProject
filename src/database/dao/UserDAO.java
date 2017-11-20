@@ -110,8 +110,8 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
-                user.setFname(rs.getString("firstName"));
-                user.setLname(rs.getString("lastName"));
+                user.setFirstName(rs.getString("firstName"));
+                user.setLastName(rs.getString("lastName"));
                 
 
                 users.add(user);

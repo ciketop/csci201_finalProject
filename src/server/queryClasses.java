@@ -33,8 +33,6 @@ public class queryClasses extends HttpServlet {
 		List<Course> courses = new ArrayList<Course>();
 		List<Course> publicCourse = new ArrayList<Course>();
 		
-//		int userID = (int)request.getSession().getAttribute("userID");
-		
 		Connection conn = null;
 		Statement st = null;
 		PreparedStatement ps = null;

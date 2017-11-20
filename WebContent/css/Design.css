@@ -249,12 +249,71 @@ margin-left: 8px;
   
 }
 
+#createAccountButton{
+  font-family:'Righteous', serif;
+  color: #000062;
+  font-size: 11px;
+  text-decoration: underline;
+  background-color: transparent;
+  left: 13%;
+  position: absolute;
+  top: 141%;
+}
+  
+
+
 #loginLabel{
 	  color: #000062;
-	  font-size: 20px;
-	  
+	  font-size: 20px;	
+}
+
+#createBox{
+	background-color: white;
+	border-radius: 5px;
+	padding: 30px;
+	position: absolute;
+	left:24%;
+	width: 50%;
+	height: 70; 
+	top: 100%;
+
+}
+
+
+#createLabel{
+ 	color: #000062;
+	font-size: 14px;	
 	
 }
+
+#createAccount{
+ 	color: #000062;
+	font-size: 14px;	
+	left: -24%;
+  	position: absolute;
+  	top: 140%;
+
+}
+
+
+#createButton{
+	-webkit-border-radius: 7;
+  -moz-border-radius: 7;
+  border-radius: 1px;
+  font-family:'Righteous', serif;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 3px 10px 10px 10px;
+  border: solid #ffffff 1px;
+  text-decoration: none;
+  background-color: #000062;
+  left: -4%;
+  position: absolute;
+  top: -20px;
+
+  
+}
+
 
 
 input[type=text] {
@@ -263,6 +322,11 @@ input[type=text] {
 }
 
 input[type=password] {
+	font-family: Courier New;
+    color: black;
+}
+
+input[type=email] {
 	font-family: Courier New;
     color: black;
 }

@@ -4,8 +4,8 @@ public class User {
     private int userID;
     private String username;
     private String password;
-    private String fname;
-    private String lname;
+    private String firstName;
+    private String lastName;
     private String email;
 
     public User() {
@@ -17,13 +17,13 @@ public class User {
 //        this.password = password;
 //    }
     
-    public User(int userID, String username, String password, String fname, String lname, String email) {
+    public User(String username, String password, String fname, String lname, String email) {
 		super();
-		this.userID = userID;
+//		this.userID = userID;
 		this.username = username;
 		this.password = password;
-		this.fname = fname;
-		this.lname = lname;
+		this.firstName = fname;
+		this.lastName = lname;
 		this.email = email;
 	}
 
@@ -43,20 +43,20 @@ public class User {
         this.username = username;
     }
 
-    public String getFname() {
-		return fname;
+    public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFname(String fname) {
-		this.fname = fname;
+	public void setFirstName(String fname) {
+		this.firstName = fname;
 	}
 
-	public String getLname() {
-		return lname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLname(String lname) {
-		this.lname = lname;
+	public void setLastName(String lname) {
+		this.lastName = lname;
 	}
 
 	public String getEmail() {
