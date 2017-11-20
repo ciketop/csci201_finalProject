@@ -28,57 +28,64 @@ public class queryClasses extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("In servlet");
+		
 		List<Course> courses = new ArrayList<Course>();
 		List<Course> publicCourse = new ArrayList<Course>();
 		
 //		int userID = (int)request.getSession().getAttribute("userID");
-		User currUser = (User)request.getSession().getAttribute("user");
-		int userID = currUser.getUserID();
-		
-		System.out.println("In servlet");
 		
 		Connection conn = null;
 		Statement st = null;
 		PreparedStatement ps = null;
 		ResultSet courseID = null;
 		ResultSet courseDetail = null;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LiveClass?user=root&password=root&useSSL=false");
-			st = conn.createStatement();
-			ps = conn.prepareStatement("SELECT * from Course WHERE courseID=?");
-			
-			courseID = st.executeQuery("SELECT * from CoursePrivilege WHERE userID='" + userID + "'");
-			while(courseID.next()) {
-				int ID = courseID.getInt("courseID");
-				ps.setInt(1, ID);
-				courseDetail = ps.executeQuery();
-				while(courseDetail.next()) {
-					String prefix = courseDetail.getString("coursePrefix");
-					String number = courseDetail.getString("courseNumber");
-					String name = courseDetail.getString("courseName");
-					System.out.println("Queried: " + prefix + " " + number + " - " + name);
-					Course newCourse = new Course(userID, prefix, number, name);
-					courses.add(newCourse);
+		
+		User currUser = (User)request.getSession().getAttribute("user");
+		
+		if(currUser != null) {
+		
+			int userID = currUser.getUserID();
+		
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LiveClass?user=root&password=root&useSSL=false");
+				st = conn.createStatement();
+				ps = conn.prepareStatement("SELECT * from Course WHERE courseID=?");
+				
+				courseID = st.executeQuery("SELECT * from CoursePrivilege WHERE userID='" + userID + "'");
+				while(courseID.next()) {
+					int ID = courseID.getInt("courseID");
+					ps.setInt(1, ID);
+					courseDetail = ps.executeQuery();
+					while(courseDetail.next()) {
+						String prefix = courseDetail.getString("coursePrefix");
+						String number = courseDetail.getString("courseNumber");
+						String name = courseDetail.getString("courseName");
+//						int courseID1 = courseDetail.getInt("courseID");
+						System.out.println("Queried: " + ID + " " + prefix + " " + number + " - " + name);
+						Course newCourse = new Course(ID, prefix, number, name);
+						courses.add(newCourse);
+					}
+				}
+				
+			} catch (SQLException sqle) {
+				System.out.println ("SQLException: " + sqle.getMessage());
+			} catch (ClassNotFoundException cnfe) {
+				System.out.println ("ClassNotFoundException: " + cnfe.getMessage());
+			} finally {
+				try {
+					if (courseID != null) courseID.close();
+					if(courseDetail != null) courseDetail.close();
+					if (st != null) st.close();
+					if (ps != null) ps.close();
+					if (conn != null) conn.close();
+				} catch (SQLException sqle) {
+					System.out.println("sqle: " + sqle.getMessage());
 				}
 			}
-			
-		} catch (SQLException sqle) {
-			System.out.println ("SQLException: " + sqle.getMessage());
-		} catch (ClassNotFoundException cnfe) {
-			System.out.println ("ClassNotFoundException: " + cnfe.getMessage());
-		} finally {
-			try {
-				if (courseID != null) courseID.close();
-				if(courseDetail != null) courseDetail.close();
-				if (st != null) st.close();
-				if (ps != null) ps.close();
-				if (conn != null) conn.close();
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
-			}
+			request.getSession().setAttribute("courses", courses);
 		}
-		request.getSession().setAttribute("courses", courses);
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -95,8 +102,8 @@ public class queryClasses extends HttpServlet {
 					String prefix = courseDetail.getString("coursePrefix");
 					String number = courseDetail.getString("courseNumber");
 					String name = courseDetail.getString("courseName");
-					System.out.println("Queried: " + prefix + " " + number + " - " + name);
-					Course newCourse = new Course(userID, prefix, number, name);
+					System.out.println("Queried: " + ID + " " + prefix + " " + number + " - " + name);
+					Course newCourse = new Course(ID, prefix, number, name);
 					publicCourse.add(newCourse);
 				}
 			}
