@@ -85,7 +85,7 @@
 			
 			<%
 				if(currUser != null) {
-					String name = currUser.getFname();
+					String name = currUser.getFirstName();
 			%>
 					<div id="chattextarea">
 						<form name="chatform" onsubmit="return sendMessage('<%=name%>')"">
