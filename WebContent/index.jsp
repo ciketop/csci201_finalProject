@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="database.object.User" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
    <head>
    
@@ -10,16 +13,27 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
    </head>
    
-   <body>
-   
+   	<body>
+  	<%
+  		User currUser = (User)request.getSession().getAttribute("user");
+  	%>
 	   <nav class="transparent z-depth-0">
 	    		<div class="nav-wrapper">
 	      		<font data-shadow='LiveClass' id = "title">LiveClass</font>
 	      		<ul class="right hide-on-med-and-down">
 	      		<li><a href="" id="navBtns">Home</a></li>
-	        	 	<li><a href="login.html" id="navBtns">Login</a></li>
-	      			<!-- <li><a href="index.html" id="navBtns" class="waves-effect waves-light btn">Home</a></li>
-	        			<li><a href="login.html" id="navBtns" class="waves-effect waves-light btn">Login</a></li> -->
+	      	<%
+	      		if(currUser == null) {
+	      	%>
+	        	 		<li><a href="login.html" id="navBtns">Login</a></li>
+	        	 <%
+	      		}
+	      		else {
+	      	%>		
+	      			<li><a href="logout.jsp" id="navBtns">Logout</a></li>
+	      	<%		
+	      		}
+	        	 %>
 	      		</ul>
 	    		</div>
 	  	</nav> 

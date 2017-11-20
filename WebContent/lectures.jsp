@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
+<%@ page import="database.object.User" %>
 <%@ page import="database.object.Course"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -16,8 +17,9 @@
 
 	<body>
 	<%
-      List<Course> userCourses = (List<Course>)request.getSession().getAttribute("courses");
-	  List<Course> publicCourse = (List<Course>)request.getSession().getAttribute("publicCourse");
+		User currUser = (User)request.getSession().getAttribute("user");
+    		List<Course> userCourses = (List<Course>)request.getSession().getAttribute("courses");
+	  	List<Course> publicCourse = (List<Course>)request.getSession().getAttribute("publicCourse");
 	%>
 	
 		<div class="background1"></div>
@@ -26,8 +28,19 @@
 			<div class="nav-wrapper">
 				<font id="title">LiveClass</font>
 				<ul class="right hide-on-med-and-down">
-					<li><a href="index.html" id="navBtns">Home</a></li>
-					<li><a href="login.html" id="navBtns">Login</a></li>
+				<li><a href="index.jsp" id="navBtns">Home</a></li>
+				<%
+					if(currUser == null) {
+				%>
+						<li><a href="login.html" id="navBtns">Login</a></li>
+				<%
+					}
+					else {
+				%>
+						<li><a href="logout.jsp" id="navBtns">Logout</a></li>
+				<%
+					}
+				%>
 					<!-- <li><a href="index.html" id="navBtns" class="waves-effect waves-light btn">Home</a></li>
 		        			<li><a href="login.html" id="navBtns" class="waves-effect waves-light btn">Login</a></li> -->
 				</ul>
