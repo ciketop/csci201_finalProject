@@ -109,6 +109,10 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
                 user.setUserID(rs.getInt("userID"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+                user.setFname(rs.getString("firstName"));
+                user.setLname(rs.getString("lastName"));
+                
 
                 users.add(user);
             }
@@ -128,6 +132,9 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
         List<String> columnLabels = new ArrayList<>();
         columnLabels.add("username");
         columnLabels.add("password");
+        columnLabels.add("firstName");
+        columnLabels.add("lastName");
+        columnLabels.add("email");
 
 
         int numInserted = genericDAO.insertObjects(tableName, columnLabels, users);
@@ -141,6 +148,9 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
         List<String> columnLabels = new ArrayList<>();
         columnLabels.add("username");
         columnLabels.add("password");
+        columnLabels.add("firstName");
+        columnLabels.add("lastName");
+        columnLabels.add("email");
 
         int numUpdated = genericDAO.updateObjects(
                 tableName,
@@ -160,6 +170,9 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
         List<String> columnLabels = new ArrayList<>();
         columnLabels.add("username");
         columnLabels.add("password");
+        columnLabels.add("firstName");
+        columnLabels.add("lastName");
+        columnLabels.add("email");
 
         int numDeleted = genericDAO.deleteObjects(tableName, columnLabels, users);
         System.out.println("numDeleted = " + numDeleted);
