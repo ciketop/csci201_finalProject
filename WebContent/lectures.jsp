@@ -57,7 +57,7 @@
 		   
 		               <tbody>
 		               <% 
-		               //blah blah
+		               if(userCourses != null) {
 		                  for(int i = 0; i < userCourses.size(); i++) {
 		                     Course currCourse = userCourses.get(i);
 		                     String prefix = currCourse.getCoursePrefix();
@@ -71,6 +71,7 @@
 		                  </tr>
 		               <%
 		                  }
+		               }
 		               %>
 		   
 		               </tbody>
