@@ -21,7 +21,7 @@
 		/* request.getSession().setAttribute("userID", userID);
 		request.getSession().setAttribute("username", username);
 		request.getSession().setAttribute("password", password); */
-		request.getSession().setAttribute("user", usr);
+		request.getSession().setAttribute("user", usr.get(0));
 	}
 	else {
 		request.getSession().setAttribute("user", null);

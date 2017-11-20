@@ -4,6 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
+		
 		<link rel="stylesheet" type="text/css" href="Design.css" />
 		<link rel="stylesheet" type="text/css" href="css/materialize.css" />
 		
@@ -64,10 +65,6 @@
 	      		</ul>
 	    		</div>
 	  	</nav> 
-	
-		<%
-			
-		%>	
 	  
 		<div id="chatbox"> 
 			<div id="mychat"></div>
@@ -78,9 +75,8 @@
 					String name = currUser.getUsername();
 			%>
 					<div id="chattextarea">
-						<form name="chatform" onsubmit="return sendMessage(<%= name %>);">
+						<form name="chatform" onsubmit="return sendMessage('<%=name%>')"">
 							<input id="myArea" type="text" name="message" placeholder="Type here..">
-			
 							<input class = "btn" id="button1" type="submit" name="submit" value="Send Message" />
 						</form>
 					</div>
