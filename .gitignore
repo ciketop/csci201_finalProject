@@ -54,9 +54,11 @@ local.properties
 !.idea/
 .idea/workspace.xml
 .idea/tasks.xml
+.idea/dataSources/
 !*.iml
 *.iws
 out/
+
  
 # Mac
 *.DS_Store
