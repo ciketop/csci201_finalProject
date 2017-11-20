@@ -72,7 +72,7 @@
 			<%
 				User currUser = (User) request.getSession().getAttribute("user");
 				if(currUser != null) {
-					String name = currUser.getUsername();
+					String name = currUser.getFname();
 			%>
 					<div id="chattextarea">
 						<form name="chatform" onsubmit="return sendMessage('<%=name%>')"">
