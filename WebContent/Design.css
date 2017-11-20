@@ -355,6 +355,10 @@ tbody tr:hover {
 table {
 	overflow: scroll;
 }
+
+table a:link, a:visited, a:active, a:hover {
+	color: white;
+}
  
 
   
