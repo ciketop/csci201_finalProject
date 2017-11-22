@@ -18,18 +18,22 @@
 		<script>
 			var socket;
 			function connectToServer(){
-				socket = new WebSocket("ws://localhost:8080/csci201_finalProject/chatroom");
+				socket = new WebSocket("ws://localhost:8080/" +
+					${not empty pageContext.request.contextPath ? pageContext.request.contextPath + "/" : ""}
+					+ "chatroom"
+				);
+
 				socket.onopen = function(event){
 					document.getElementById("mychat").innerHTML +=" User connected!<br />";
-				}
+				};
 				
 				socket.onmessage = function(event){
 					document.getElementById("mychat").innerHTML += event.data + "<br />";
-				}
+				};
 				
 				socket.onclose = function(event){
 					document.getElementById("mychat").innerHTML += "disconnected!<br />";
-				}
+				};
 				
 			}	
 			
