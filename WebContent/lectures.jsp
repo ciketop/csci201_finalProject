@@ -57,9 +57,6 @@
 				<div class="row"></div>
 				<div class="row">
 	
-	
-	
-	
 					<h4>Your Courses:</h4>
 		            <table class="bordered" id="courseTable">
 		               <thead>
