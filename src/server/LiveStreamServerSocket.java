@@ -14,8 +14,10 @@ public class LiveStreamServerSocket {
 
     @OnMessage
     public void processVideo(byte[] imageData, Session session) {
+    		
         try {
             // Wrap a byte array into a buffer
+
             ByteBuffer buffer = ByteBuffer.wrap(imageData);
 
             for (Session ss : sessions) {
@@ -30,6 +32,7 @@ public class LiveStreamServerSocket {
     @OnOpen
     public void whenOpening(Session session) throws IOException, EncodeException {
         session.setMaxBinaryMessageBufferSize(1024 * 1024);
+        System.out.println(session.getId() + " - connected!");
         sessions.add(session);
     }
 

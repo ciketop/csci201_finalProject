@@ -19,7 +19,7 @@ public class ServerSocket {
 		private static Vector<Session> sessionVector = new Vector<Session>();
 		@OnOpen
 		public void open(Session session) {
-			System.out.println("Client connected!");
+//			System.out.println("Client connected!");
 			sessionVector.add(session);
 		}
 		@OnMessage

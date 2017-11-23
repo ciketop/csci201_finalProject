@@ -18,10 +18,8 @@
 		<script>
 			var socket;
 			function connectToServer(){
-				socket = new WebSocket("ws://localhost:8080/" +
-					${not empty pageContext.request.contextPath ? pageContext.request.contextPath + "/" : ""}
-					+ "chatroom"
-				);
+				socket = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/chatroom"
+					);
 
 				socket.onopen = function(event){
 					document.getElementById("mychat").innerHTML +=" User connected!<br />";
@@ -34,6 +32,17 @@
 				socket.onclose = function(event){
 					document.getElementById("mychat").innerHTML += "disconnected!<br />";
 				};
+				
+				/* let ws = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStream");
+			    let target = document.getElementById("target");
+			
+			    ws.onmessage = function (msg) {
+			        let url = URL.createObjectURL(msg.data);
+			        target.onload = function () {
+			            window.URL.revokeObjectURL(url);
+			        };
+			        target.src = url;
+			    } */
 				
 			}	
 			
@@ -56,7 +65,7 @@
 			
 		</script>
 	</head>
-	<body onload="connectToServer()">
+	<body onload="connectToServer()" style="overflow:scroll;">
 	<%
 		User currUser = (User) request.getSession().getAttribute("user");
 	%>
@@ -74,7 +83,7 @@
 	      		}
 	      		else {
 	        	 %>
-	        	 	<li><a href="logout.jsp">Logout</a></li>
+	        	 	<li><a href="logout.jsp" id="navBtns">Logout</a></li>
 	        	 <%
 	      		}
 	        	 %>
@@ -83,6 +92,26 @@
 	      		</ul>
 	    		</div>
 	  	</nav> 
+	  	
+	  	<div id="container">
+	    		<img id="target" style="display: inline;"/>
+		</div>
+		<script type="text/javascript">
+		    // to see live stream on another computer, change localhost:8080 to the ip address of that computer
+		    "use strict";
+		    let ws = new WebSocket("ws://localhost:8080/" +
+		            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/liveStream"); 
+		    let target = document.getElementById("target");
+		
+		    ws.onmessage = function (msg) {
+		    		console.log("video received");
+		        let url = URL.createObjectURL(msg.data);
+		        target.onload = function () {
+		            window.URL.revokeObjectURL(url);
+		        };
+		        target.src = url;
+		    }
+		</script>
 	  
 		<div id="chatbox"> 
 			<div id="mychat"></div>

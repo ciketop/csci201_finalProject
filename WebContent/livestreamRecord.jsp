@@ -19,6 +19,7 @@
     <video id="live" width="320" height="240" autoplay="autoplay"
            style="display: inline;"></video>
     <canvas width="320" id="canvas" height="240" style="display: none"></canvas>
+    <!-- <canvas width="640" id="canvas" height="480" style="display: none"></canvas> -->
 </div>
 
 <script type="text/javascript">
@@ -26,9 +27,14 @@
     let canvas = document.getElementById("canvas");
     let ctx = canvas.getContext('2d');
 
-    let ws = new WebSocket("ws://localhost:8080" +
-        "${not empty pageContext.request.contextPath ? "/" + pageContext.request.contextPath: ""}"
-        + "/liveStream");
+    console.log("ws://localhost:8080" +
+            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
+            + "/liveStream");
+    let ws = new WebSocket("ws://localhost:8080/" +
+        "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
+        + "/liveStream"); 
+    /* let ws = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStream"); */
+    
     ws.onopen = function () {
         console.log("Openened connection to websocket");
     };
@@ -81,7 +87,11 @@
 </div>
 <script type="text/javascript">
     let target = document.getElementById("target");
-    let clientWs = new WebSocket("ws://localhost:8080${not empty pageContext.request.contextPath ? "/" + pageContext.request.contextPath: ""}/liveStream");
+    
+    let clientWs = new WebSocket("ws://localhost:8080" +
+            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
+            + "/liveStream"); 
+    /* let clientWs = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStream"); */
 
     clientWs.onmessage = function (msg) {
         let url = URL.createObjectURL(msg.data);

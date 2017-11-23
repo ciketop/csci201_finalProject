@@ -53,6 +53,7 @@ public class GenericDAO<T> implements GenericDAOTemplate<T> {
 
         try {
             connection = ConnectionFactory.getConnection(dbName);
+//            System.out.println(connection == null);
 
             String queryString = StringParse.generateSelectQueryString(
                     selectQueryTemplate,
@@ -63,8 +64,10 @@ public class GenericDAO<T> implements GenericDAOTemplate<T> {
                             whereClausePairs)
             );
 
+//            System.out.println("got here");
             System.out.println(queryString);
-
+//            System.out.println("gothere 2");
+            
             ps = connection.prepareStatement(queryString);
             if (connectType != NO_WHERE_CLAUSE) {
                 int psParamIdx = 0;
