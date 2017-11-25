@@ -73,10 +73,11 @@
 		                     String prefix = currCourse.getCoursePrefix();
 		                     String number = currCourse.getCourseNumber();
 		                     String name = currCourse.getCourseName();
+		                     String courseName = prefix+number;
 		                     
 		               %>
 		                  <tr>
-		                     <td><a href="chat.jsp"><%= prefix + " " + number + " - " + name %></a></td>
+		                     <td><a href="chat.jsp?course=<%= courseName %>"><%= prefix + " " + number + " - " + name %></a></td>
 		   
 		                  </tr>
 		               <%
