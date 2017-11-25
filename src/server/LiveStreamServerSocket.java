@@ -6,13 +6,17 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.ByteBuffer;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 
 @ServerEndpoint(value = "/liveStream")
 public class LiveStreamServerSocket {
     private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
-
+    private static Map<String, Vector<Session>> classMap = Collections.synchronizedMap(new HashMap<String, Vector<Session> >());
+    
     @OnMessage
     public void processVideo(byte[] imageData, Session session) {
         try {
@@ -20,9 +24,13 @@ public class LiveStreamServerSocket {
 
             ByteBuffer buffer = ByteBuffer.wrap(imageData);
 
-            for (Session ss : sessions) {
-                ss.getBasicRemote().sendBinary(buffer);
-            }
+            String qString = session.getQueryString();
+			String[] split = qString.split("class=");
+			String courseName = split[1];
+			Vector<Session> connections = classMap.get(courseName);
+			for(Session s:connections) {
+				s.getBasicRemote().sendBinary(buffer);
+			}
         } catch (Throwable ioe) {
             System.out.println("Error sending message " + ioe.getMessage());
         }
@@ -32,6 +40,21 @@ public class LiveStreamServerSocket {
     @OnOpen
     public void whenOpening(Session session) throws IOException, EncodeException {
     		
+    		String qString = session.getQueryString();
+		String[] split = qString.split("class=");
+		String courseName = split[1];
+		Vector<Session> connections = classMap.get(courseName);
+		if(connections == null) {
+			System.out.println("adding class - " + courseName);
+			Vector<Session> newConnections = new Vector<Session>();
+			newConnections.add(session);
+			classMap.put(courseName, newConnections);
+		}
+		else {
+			System.out.println("adding session into " + courseName);
+			connections.add(session);
+		}
+    	
         session.setMaxBinaryMessageBufferSize(1024 * 1024);
         System.out.println(session.getId() + " - connected!");
         sessions.add(session);
@@ -47,5 +70,11 @@ public class LiveStreamServerSocket {
     public void whenClosing(Session session) {
         System.out.println("Goodbye !");
         sessions.remove(session);
+        
+        String qString = session.getQueryString();
+		String[] split = qString.split("class=");
+		String courseName = split[1];
+		Vector<Session> allConnections = classMap.get(courseName);
+		allConnections.remove(session);
     }
 }
