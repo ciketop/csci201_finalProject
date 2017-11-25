@@ -16,10 +16,16 @@
 		<title>Web Socket Chat Client</title>
 		
 		<script>
+		<%
+			String courseName = request.getParameter("course");
+			System.out.println("chat.jsp for course: " + courseName);
+		%>
 			var socket;
 			function connectToServer(){
-				socket = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/chatroom"
-					);
+				console.log("ws://localhost:8080/" +
+			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/chatroom" + "?class=" + "<%= courseName %>");
+				socket = new WebSocket("ws://localhost:8080/" +
+			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/chatroom" + "?class=" + "<%= courseName %>");
 
 				socket.onopen = function(event){
 					document.getElementById("mychat").innerHTML +=" User connected!<br />";
@@ -33,16 +39,6 @@
 					document.getElementById("mychat").innerHTML += "disconnected!<br />";
 				};
 				
-				/* let ws = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStream");
-			    let target = document.getElementById("target");
-			
-			    ws.onmessage = function (msg) {
-			        let url = URL.createObjectURL(msg.data);
-			        target.onload = function () {
-			            window.URL.revokeObjectURL(url);
-			        };
-			        target.src = url;
-			    } */
 				
 			}	
 			
@@ -101,6 +97,7 @@
 		    "use strict";
 		    let ws = new WebSocket("ws://localhost:8080/" +
 		            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/liveStream"); 
+		    /* ws.send("course:" + courseName); */
 		    let target = document.getElementById("target");
 		
 		    ws.onmessage = function (msg) {
