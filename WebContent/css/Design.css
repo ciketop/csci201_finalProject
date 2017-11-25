@@ -391,13 +391,17 @@ body:before {
 	height: 100%;
 }
 
-#target {
+#target, #videoContainer {
 	left: 3%;
 	position: fixed;
 	width: 60%;
 	margin-bottom: 0.5cm;
 	top: 10%;
 	margin-top: 2cm;
+}
+
+#live, #canvas {
+	width:100%;
 }
 
 #chatbox {
@@ -462,10 +466,32 @@ input, textarea {
 	font-family: 'Righteous', serif;
 	position: fixed;
 	top: 0.7%;
-	margin-left: 15px;
+	margin-left: 3%;
 	margin-right: 20px;
 }
 
-#mychat span {
+#red {
 	color: red;
 }
+
+#blue {
+	color: blue;
+}
+
+#gold {
+	color: gold;
+}
+
+#err {
+	color:red;
+}
+
+#h3Chat {
+	text-align: left;
+	text-shadow: none;
+	letter-spacing: initial;
+	margin-left: 3%;
+	margin-bottom: 0;
+	margin-top: 40px;
+}
+

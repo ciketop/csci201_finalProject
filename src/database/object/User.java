@@ -76,31 +76,40 @@ public class User {
         this.password = password;
     }
     
+    // getPriv class
+    // Takes in a courseID and return the user's privilege in that class
     public int getPriv(int courseID) {
     		int priv = 0;
     		
+    		// Set up all the variables
     		Connection conn = null;
     		Statement st = null;
     		ResultSet rs = null;
     		
     		try {
+    			// Connect to database
     			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LiveClass?user=root&password=root&useSSL=false");
 			st = conn.createStatement();
+			
+			// Select from the coursePrivilege table with userID and courseID
 			rs = st.executeQuery("SELECT privilegeID FROM CoursePrivilege WHERE userID='" + userID + "' AND courseID='" + courseID + "'");
-    			if(rs.next()) {
+    			
+			// If entry is found, get privilegeID from there
+			if(rs.next()) {
     				priv = rs.getInt("privilegeID");
     				System.out.println("privilege: " + priv);
     			}
+			// If not found, then it's a public class, set privilege to 2 (student)
     			else {
     				priv = 2;
-    			}
-			
+    			}	
     		} catch (SQLException sqle) {
 			System.out.println ("SQLException: " + sqle.getMessage());
 		} catch (ClassNotFoundException cnfe) {
 			System.out.println ("ClassNotFoundException: " + cnfe.getMessage());
 		} finally {
+			// Close everything
 			try {
 				if(conn != null) conn.close();
 				if(st != null) conn.close();
@@ -110,6 +119,7 @@ public class User {
 			}
 		}
     		
+    		// Return the privilegeID
     		return priv;
     }
     

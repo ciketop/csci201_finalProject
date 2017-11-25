@@ -74,7 +74,7 @@
 		                     String prefix = currCourse.getCoursePrefix();
 		                     String number = currCourse.getCourseNumber();
 		                     String name = currCourse.getCourseName();
-		                     String courseName = prefix+number;
+		                     String courseName = prefix + "-" + number;
 		                     
 		               %>
 		                  <tr>
@@ -82,6 +82,13 @@
 		                  </tr>
 		               <%
 		                  }
+		               }
+		               else {
+		               %>
+		                  <tr>
+		                     <td><span id="red">Please log in to see your personal courses!</span></td>
+		                  </tr>
+		               <%
 		               }
 		               %>
 		   
@@ -113,7 +120,7 @@
 		                     String prefix = currCourse.getCoursePrefix();
 		                     String number = currCourse.getCourseNumber();
 		                     String name = currCourse.getCourseName();
-		                     String courseName = prefix + number;
+		                     String courseName = prefix + "-" +  number;
 		                     
 		               %>
 		                  <tr>
