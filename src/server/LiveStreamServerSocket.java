@@ -3,6 +3,7 @@ package server;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.HashSet;
@@ -14,7 +15,6 @@ public class LiveStreamServerSocket {
 
     @OnMessage
     public void processVideo(byte[] imageData, Session session) {
-    		
         try {
             // Wrap a byte array into a buffer
 
@@ -31,6 +31,7 @@ public class LiveStreamServerSocket {
 
     @OnOpen
     public void whenOpening(Session session) throws IOException, EncodeException {
+    		
         session.setMaxBinaryMessageBufferSize(1024 * 1024);
         System.out.println(session.getId() + " - connected!");
         sessions.add(session);
