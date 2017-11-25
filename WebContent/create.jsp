@@ -3,6 +3,7 @@
 <%@ page import="database.dao.UserDAO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="database.object.User" %>
+<%@ page import="database.util.Crypto" %>
 <%@ page import="java.util.ArrayList" %>
 <%
 	UserDAO userDAO = (UserDAO)request.getSession().getAttribute("userDAO");
@@ -13,6 +14,7 @@
 
 	String username = request.getParameter("username");
 	String password = request.getParameter("password");
+	
 	String fname = request.getParameter("fname");
 	String lname = request.getParameter("lname");
 	String email = request.getParameter("email");
@@ -33,7 +35,10 @@
 	else {
 		/* request.getSession().setAttribute("user", null);	 */
 		List<User> toAdd = new ArrayList<User>();
-		User newAccount = new User(username, password, fname, lname, email);
+		Crypto crypto = new Crypto();
+		String salt = crypto.saltGenerator();
+		String hash = crypto.hashPassword(password, salt);
+		User newAccount = new User(username, hash, fname, lname, email, salt);
 		toAdd.add(newAccount);
 		userDAO.insertUsers(toAdd);
 		request.getSession().setAttribute("user", newAccount);
