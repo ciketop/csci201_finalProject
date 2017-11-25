@@ -60,7 +60,7 @@ public class queryClasses extends HttpServlet {
 						String prefix = courseDetail.getString("coursePrefix");
 						String number = courseDetail.getString("courseNumber");
 						String name = courseDetail.getString("courseName");
-//						int courseID1 = courseDetail.getInt("courseID");
+
 						System.out.println("Queried: " + ID + " " + prefix + " " + number + " - " + name);
 						Course newCourse = new Course(ID, prefix, number, name);
 						courses.add(newCourse);

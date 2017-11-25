@@ -70,6 +70,7 @@
 		               if(userCourses != null) {
 		                  for(int i = 0; i < userCourses.size(); i++) {
 		                     Course currCourse = userCourses.get(i);
+		                     int ID = currCourse.getCourseID();
 		                     String prefix = currCourse.getCoursePrefix();
 		                     String number = currCourse.getCourseNumber();
 		                     String name = currCourse.getCourseName();
@@ -77,8 +78,7 @@
 		                     
 		               %>
 		                  <tr>
-		                     <td><a href="chat.jsp?course=<%= courseName %>"><%= prefix + " " + number + " - " + name %></a></td>
-		   
+		                     <td><a href="chat.jsp?course=<%=courseName%>&id=<%=ID%>"><%= prefix+" "+number+" - "+name %></a></td>
 		                  </tr>
 		               <%
 		                  }
@@ -109,13 +109,15 @@
 		               //blah blah
 		                  for(int i = 0; i < publicCourse.size(); i++) {
 		                     Course currCourse = publicCourse.get(i);
+		                     int ID = currCourse.getCourseID();
 		                     String prefix = currCourse.getCoursePrefix();
 		                     String number = currCourse.getCourseNumber();
 		                     String name = currCourse.getCourseName();
+		                     String courseName = prefix + number;
 		                     
 		               %>
 		                  <tr>
-		                     <td><a href="chat.jsp"><%= prefix + " " + number + " - " + name %></a></td>
+		                     <td><a href="chat.jsp?course=<%=courseName%>&id=<%=ID%>"><%= prefix + " " + number + " - " + name %></a></td>
 		   
 		                  </tr>
 		               <%
