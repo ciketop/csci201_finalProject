@@ -22,6 +22,7 @@
 	      		<font data-shadow='LiveClass' id = "title">LiveClass</font>
 	      		<ul class="right hide-on-med-and-down">
 	      		<li><a href="" id="navBtns">Home</a></li>
+	      		<li><a href="queryClasses" id="navBtns">Lectures</a>
 	      	<%
 	      		if(currUser == null) {
 	      	%>
@@ -69,9 +70,9 @@
 		 <div class="row"></div> 
 		 
 
-		 <div class= "row">
+		 <!-- <div class= "row">
 		 	<div class="col s12"><a href="queryClasses" id = "viewLecturesButton" class="waves-effect waves-light btn-large">View All Lectures</a></div>
-		 </div> 
+		 </div>  -->
 		 
 		 <div class="row"></div> 
 		 <div class="row"></div> 

@@ -15,31 +15,37 @@
 		
 		<title>Web Socket Chat Client</title>
 		<%
+			// Get some of the basic info that will be needed for this page
+			// Set privilege to 0 for now, this will be changed soon
 			int priv = 0;
 			User currUser = (User) request.getSession().getAttribute("user");
 			String courseName = request.getParameter("course");
 			int ID = Integer.parseInt(request.getParameter("id"));
+			
 			System.out.println("chat.jsp for course: " + courseName);
 			
+			// If no user is logged in, this is probably a public course, set
+			// privilege to 2 (viewer)
 			if(currUser == null) {
 				priv = 2;
 			}
+			// If user is logged in, call getPriv to see if it's is a student or instructor
 			else {
 				priv = currUser.getPriv(ID);
 			}
 			System.out.println("priv: " + priv);
 			
 		%>
+		<!-- This is for the chat server -->
 		<script>
 			var socket;
 			function connectToServer(){
-				console.log("ws://localhost:8080/" +
-			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/chatroom?class=" + "<%= courseName %>");
+				/* Create a new Websocket with the correct path, and parameter class */
 				socket = new WebSocket("ws://localhost:8080/" +
 			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/chatroom?class=" + "<%= courseName %>");
 
 				socket.onopen = function(event){
-					document.getElementById("mychat").innerHTML +=" User connected!<br />";
+					document.getElementById("mychat").innerHTML +="Connected to chat server<br />";
 				};
 				
 				socket.onmessage = function(event){
@@ -52,21 +58,35 @@
 				
 				
 			}	
-			
+			/* sendMessage(name) */
+			/* sends a message to the chat server */
 			function sendMessage(name){
 				var d = new Date();
 				var n = d.toLocaleTimeString();
 				n=n.substring(0,4);
 				if(document.chatform.message.value !=""){
-					socket.send(n + " - " + name + ": " + document.chatform.message.value); //need to change User to login user
+					//socket.send(n + " - " + name + ": " + document.chatform.message.value); //need to change User to login user
+				<%
+					if(priv == 2) {
+				%>
+					socket.send("<span id=\"blue\">" + name + ": " + "</span>" + document.chatform.message.value);
+				<%
+					}
+					else if(priv == 1) {
+				%>
+					socket.send("<span id=\"gold\">" + name + ": " + "</span>" + document.chatform.message.value);
+				<%
+					}
+				%>
 					document.getElementById("myArea").value = "";
 				}
 				return false; 
 		
 			}
-			
+			/* return an error message in case user's not logged in */
 			function errMsg() {
-				document.getElementById("mychat").innerHTML += "<span>You must be logged in to send messages!</span><br />" ;
+				document.getElementById("mychat").innerHTML += "<span id=\"red\">You must be logged in to send messages!</span><br />" ;
+				document.getElementById("myArea").value = "";
 				return false;
 			}
 			
@@ -79,6 +99,7 @@
 	      		<font id = "titleChat">LiveClass</font>
 	      		<ul class="right hide-on-med-and-down">
 	      		<li><a href="index.jsp" id="navBtns">Home</a></li>
+	      		<li><a href="queryClasses" id="navBtns">Lectures</a></li>
 	      	<%
 	      		if(currUser == null) {
 	      	%>
@@ -94,10 +115,13 @@
 	      		</ul>
 	    		</div>
 	  	</nav> 
+	  
 	  	
 	  	<%
+	  		// Disaply stream if user has privilege of 2(student or guest)
 	  		if(priv == 2) {
 	  	%>
+	  		<h4 id="h3Chat"><%= courseName %></h4>
 		  	<div id="container">
 		    		<img id="target" style="display: inline;"/>
 			</div>
@@ -120,11 +144,13 @@
 			</script>
 		<%
 	  		}
+	  		// If privilege is 1 (instructor), record stream instead
 	  		else if(priv == 1) {
 		%>
-			<div>
-			    <h1>Video from Your Camera</h1>
-			    <video id="live" width="320" height="240" autoplay="autoplay"
+			<h4 id="h3Chat"><%= courseName %></h4>
+			<div id="videoContainer">
+			    
+			    <video id="live"  autoplay="autoplay"
 			           style="display: inline;"></video>
 			    <canvas width="320" id="canvas" height="240" style="display: none"></canvas>
 			    <!-- <canvas width="640" id="canvas" height="480" style="display: none"></canvas> -->
@@ -192,10 +218,12 @@
 	  		}
 		%>
 	  
+	  	<!-- chat interface -->
 		<div id="chatbox"> 
 			<div id="mychat"></div>
 			
 			<%
+				// if there's an user logged in, send message normally
 				if(currUser != null) {
 					String name = currUser.getFirstName();
 			%>
@@ -207,8 +235,8 @@
 					</div>
 			<%
 				}
-				else {
-					
+				// If user's not logged in, return error message instead
+				else {	
 			%>
 					<div id="chattextarea">
 						<form name="chatform" onsubmit="return errMsg();">
