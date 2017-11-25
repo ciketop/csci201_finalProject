@@ -1,14 +1,24 @@
 package database.dao;
 
-import database.object.User;
-import database.util.QueryData;
-import database.util.QueryPair;
-import database.util.WhereClauseConnectType;
-import util.Factory;
-
-import java.sql.*;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
+
+import database.object.User;
+import database.util.Crypto;
+import database.util.WhereClauseConnectType;
+import util.Factory;
 
 public class UserDAO implements Factory<User>, UserDAOInterface {
     private String dbName;
@@ -24,6 +34,10 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
         fullColumnLabels.add("userID");
         fullColumnLabels.add("username");
         fullColumnLabels.add("password");
+        fullColumnLabels.add("email");
+        fullColumnLabels.add("firstName");
+        fullColumnLabels.add("lastName");
+        fullColumnLabels.add("salt");
     }
 
     public UserDAO(String dbName) {
@@ -34,6 +48,10 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
         fullColumnLabels.add("userID");
         fullColumnLabels.add("username");
         fullColumnLabels.add("password");
+        fullColumnLabels.add("email");
+        fullColumnLabels.add("firstName");
+        fullColumnLabels.add("lastName");
+        fullColumnLabels.add("salt");
     }
 
     @Override
@@ -71,7 +89,10 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
                 user.setUserID(rs.getInt("userID"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
-
+                user.setEmail(rs.getString("email"));
+                user.setFirstName(rs.getString("firstName"));
+                user.setLastName(rs.getString("lastName"));
+                user.setSalt(rs.getString("salt"));
                 users.add(user);
             }
 
@@ -104,11 +125,11 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                User user = new User();
-
+            		User user = new User();
+            		user.setSalt(rs.getString("salt"));
+            		user.setPassword(rs.getString("password"));
                 user.setUserID(rs.getInt("userID"));
                 user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
                 user.setFirstName(rs.getString("firstName"));
                 user.setLastName(rs.getString("lastName"));
@@ -135,7 +156,7 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
         columnLabels.add("firstName");
         columnLabels.add("lastName");
         columnLabels.add("email");
-
+        columnLabels.add("salt");
 
         int numInserted = genericDAO.insertObjects(tableName, columnLabels, users);
         System.out.println("numInserted = " + numInserted);
@@ -151,7 +172,7 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
         columnLabels.add("firstName");
         columnLabels.add("lastName");
         columnLabels.add("email");
-
+        columnLabels.add("salt");
         int numUpdated = genericDAO.updateObjects(
                 tableName,
                 columnLabels,
@@ -173,7 +194,7 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
         columnLabels.add("firstName");
         columnLabels.add("lastName");
         columnLabels.add("email");
-
+        columnLabels.add("salt");
         int numDeleted = genericDAO.deleteObjects(tableName, columnLabels, users);
         System.out.println("numDeleted = " + numDeleted);
 
@@ -190,18 +211,50 @@ public class UserDAO implements Factory<User>, UserDAOInterface {
 //            return null;
             return false;
         }
+        
+        List<User> users = new ArrayList<>();
 
-        List<QueryPair<String, QueryData>> whereClausePairs = new ArrayList<>();
-        whereClausePairs.add(new QueryPair<>("username", new QueryData(username)));
-        whereClausePairs.add(new QueryPair<>("password", new QueryData(password)));
+        Connection connection = null;
+        ResultSet rs = null;
+        PreparedStatement ps = null;
 
-        List<User> users = genericDAO.selectQuery(
-                "User",
-                fullColumnLabels,
-                WhereClauseConnectType.AND,
-                whereClausePairs);
+        try {
+            connection = ConnectionFactory.getConnection("LiveClass");
 
-        return users != null && !users.isEmpty();
+            int psParamIdx = 0;
+            ps = connection.prepareStatement("SELECT * FROM User WHERE username = ?");
+            ps.setString(++psParamIdx, username);
+
+            // query database
+            rs = ps.executeQuery();
+            Crypto crypto = new Crypto();
+            while (rs.next()) {
+            		User user = new User();
+            		user.setSalt(rs.getString("salt"));
+            		user.setPassword(rs.getString("password"));
+            		String hash = crypto.hashPassword(password, user.getSalt());
+            		if(!hash.equals(user.getPassword())) {
+            			continue;
+            		}
+                user.setUserID(rs.getInt("userID"));
+                user.setUsername(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setFirstName(rs.getString("firstName"));
+                user.setLastName(rs.getString("lastName"));
+                
+
+                users.add(user);
+            }
+
+            return users != null && !users.isEmpty();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            // close all connection
+            ConnectionFactory.closeConnection(rs, ps, null, connection);
+        }
+        
     }
 
     @Override

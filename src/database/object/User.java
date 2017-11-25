@@ -13,12 +13,13 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String salt;
 
     public User() {
         //
     }
     
-    public User(String username, String password, String fname, String lname, String email) {
+    public User(String username, String password, String fname, String lname, String email, String salt) {
 		super();
 //		this.userID = userID;
 		this.username = username;
@@ -26,6 +27,7 @@ public class User {
 		this.firstName = fname;
 		this.lastName = lname;
 		this.email = email;
+		this.salt = salt;
 	}
 
 	public int getUserID() {
@@ -75,6 +77,14 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
     
     // getPriv class
     // Takes in a courseID and return the user's privilege in that class

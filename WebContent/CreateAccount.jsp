@@ -17,7 +17,7 @@
 		var uname = document.createForm.uname.value;
 		var psw = document.createForm.psw.value;
 		var fname = document.createForm.fname.value;
-		var lname = document.createForm.fname.value;
+		var lname = document.createForm.lname.value;
 		var email = document.createForm.email.value
      	xhttp.open("GET", "create.jsp?username="+uname+"&password="+psw+"&fname="+fname+"&lname="+lname+"&email="+email, false);
      	xhttp.send();
