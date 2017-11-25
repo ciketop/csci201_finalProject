@@ -34,9 +34,9 @@
 			var socket;
 			function connectToServer(){
 				console.log("ws://localhost:8080/" +
-			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/chatroom" + "?class=" + "<%= courseName %>");
+			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/chatroom?class=" + "<%= courseName %>");
 				socket = new WebSocket("ws://localhost:8080/" +
-			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/chatroom" + "?class=" + "<%= courseName %>");
+			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/chatroom?class=" + "<%= courseName %>");
 
 				socket.onopen = function(event){
 					document.getElementById("mychat").innerHTML +=" User connected!<br />";
@@ -105,7 +105,7 @@
 			    // to see live stream on another computer, change localhost:8080 to the ip address of that computer
 			    "use strict";
 			    let ws = new WebSocket("ws://localhost:8080/" +
-			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/liveStream"); 
+			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/liveStream?class=" + "<%= courseName %>"); 
 			    /* ws.send("course:" + courseName); */
 			    let target = document.getElementById("target");
 			
@@ -137,10 +137,10 @@
 			
 			    console.log("ws://localhost:8080" +
 			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
-			            + "/liveStream");
+			            + "/liveStream?class=" + "<%= courseName %>");
 			    let ws = new WebSocket("ws://localhost:8080/" +
 			        "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
-			        + "/liveStream"); 
+			        + "/liveStream?class=" + "<%= courseName %>"); 
 			    /* let ws = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStream"); */
 			    
 			    ws.onopen = function () {
