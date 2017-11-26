@@ -15,7 +15,7 @@
 <audio id="player" controls></audio>
 <script>
     let player = document.getElementById("player");
-    let ws = new WebSocket("ws://localhost:8080" +
+    let ws = new WebSocket("ws://${sessionScope.socketAddress}/" +
         "${not empty pageContext.request.contextPath ? "/" + pageContext.request.contextPath: ""}"
         + "/liveStreamAudio");
     ws.binaryType = 'arraybuffer';

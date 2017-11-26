@@ -135,7 +135,8 @@
 			    // to see live stream on another computer, change localhost:8080 to the ip address of that computer
 			    "use strict";
 			    let videoSocket = new WebSocket("ws://${sessionScope.socketAddress}/" +
-			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/liveStreamVideo?class=" + "<%= courseName %>");
+			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
+                    + "/liveStreamVideo?class=" + "<%= courseName %>");
 			    /* videoSocket.send("course:" + courseName); */
 			    let target = document.getElementById("target");
 			
@@ -146,7 +147,31 @@
 			            window.URL.revokeObjectURL(url);
 			        };
 			        target.src = url;
-			    }
+			    };
+
+			    // audio -- read
+                let audioSocket = new WebSocket("ws://${sessionScope.socketAddress}/" +
+                    "${not empty pageContext.request.contextPath ? "/" + pageContext.request.contextPath: ""}"
+                    + "/liveStreamAudio?class=" + "<%= courseName %>");
+                audioSocket.binaryType = 'arraybuffer';
+
+                audioSocket.onmessage = function (msg) {
+                    playSound(msg.data);
+                };
+
+                let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+                function playSound(arrayBuffer) {
+                    // convert arrayBuffer to float 32 array
+                    let buffer = new Float32Array(arrayBuffer);
+                    let src = audioContext.createBufferSource();
+                    let audioBuffer = audioContext.createBuffer(1, buffer.length, audioContext.sampleRate);
+
+                    audioBuffer.getChannelData(0).set(buffer);
+                    src.buffer = audioBuffer;
+                    src.connect(audioContext.destination);
+                    src.start();
+                }
 			</script>
 		<%
 	  		}
@@ -176,8 +201,17 @@
 			    /* let videoSocket = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStreamVideo"); */
 			    
 			    videoSocket.onopen = function () {
-			        console.log("Openened connection to websocket");
+			        console.log("Connection to websocket for video");
 			    };
+
+                let audioSocket = new WebSocket("ws://${sessionScope.socketAddress}/" +
+                    "${not empty pageContext.request.contextPath ? "/" + pageContext.request.contextPath: ""}"
+                    + "/liveStreamAudio?class=" + "<%= courseName %>");
+                audioSocket.binaryType = 'arraybuffer';
+
+                videoSocket.onopen = function () {
+                    console.log("Connection to websocket for audio");
+                };
 			
 			    // user media constraints
 			    let constraints = {
@@ -185,11 +219,9 @@
 			        audio: true
 			    };
 			    navigator.mediaDevices.getUserMedia(constraints)
-			        .then(function (stream) {
-			            video.src = URL.createObjectURL(stream);
-			        })
+			        .then(handleSuccess)
 			        .catch(function (error) {
-			            console.log("Unable to get video stream!");
+			            console.error("Unable to get video/audio stream!");
 			            console.error(error);
 			        });
 			
@@ -219,6 +251,30 @@
 			        // write the ArrayBuffer to a blob, and you're done
 			        return new Blob([ab]);
 			    }
+
+                function handleSuccess(stream) {
+			        handleVideoSuccess(stream);
+			        handleAudioSuccess(stream);
+                }
+
+                function handleVideoSuccess(stream) {
+                    video.src = URL.createObjectURL(stream);
+                    video.muted = true;
+                }
+
+                function handleAudioSuccess(stream) {
+                    let context = new AudioContext();
+                    let source = context.createMediaStreamSource(stream);
+                    let processor = context.createScriptProcessor(4096, 1, 1);
+
+                    source.connect(processor);
+                    processor.connect(context.destination);
+
+                    processor.onaudioprocess = function(e) {
+                        // Do something with the data, i.e Convert this to WAV
+                        audioSocket.send(e.inputBuffer.getChannelData(0).buffer);
+                    };
+                }
 			</script>
 		<%
 	  		}

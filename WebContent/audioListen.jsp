@@ -16,7 +16,7 @@
 <%--<button>Play song</button>--%>
 <script>
     //    let player = document.getElementById("player");
-    let ws = new WebSocket("ws://192.168.0.28:8080" +
+    let ws = new WebSocket("ws://${sessionScope.socketAddress}/" +
         "${not empty pageContext.request.contextPath ? "/" + pageContext.request.contextPath: ""}"
         + "/liveStreamAudio");
     ws.binaryType = 'arraybuffer';
