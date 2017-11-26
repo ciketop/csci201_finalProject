@@ -134,12 +134,12 @@
 			<script type="text/javascript">
 			    // to see live stream on another computer, change localhost:8080 to the ip address of that computer
 			    "use strict";
-			    let ws = new WebSocket("ws://${sessionScope.socketAddress}/" +
-			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/liveStream?class=" + "<%= courseName %>"); 
-			    /* ws.send("course:" + courseName); */
+			    let videoSocket = new WebSocket("ws://${sessionScope.socketAddress}/" +
+			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/liveStreamVideo?class=" + "<%= courseName %>");
+			    /* videoSocket.send("course:" + courseName); */
 			    let target = document.getElementById("target");
 			
-			    ws.onmessage = function (msg) {
+			    videoSocket.onmessage = function (msg) {
 			    		console.log("video received");
 			        let url = URL.createObjectURL(msg.data);
 			        target.onload = function () {
@@ -169,13 +169,13 @@
 			
 			    console.log("ws://${sessionScope.socketAddress}/" +
 			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
-			            + "/liveStream?class=" + "<%= courseName %>");
-			    let ws = new WebSocket("ws://${sessionScope.socketAddress}/" +
+			            + "/liveStreamVideo?class=" + "<%= courseName %>");
+			    let videoSocket = new WebSocket("ws://${sessionScope.socketAddress}/" +
 			        "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
-			        + "/liveStream?class=" + "<%= courseName %>"); 
-			    /* let ws = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStream"); */
+			        + "/liveStreamVideo?class=" + "<%= courseName %>");
+			    /* let videoSocket = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStreamVideo"); */
 			    
-			    ws.onopen = function () {
+			    videoSocket.onopen = function () {
 			        console.log("Openened connection to websocket");
 			    };
 			
@@ -198,7 +198,7 @@
 			            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 			            let data = canvas.toDataURL('image/jpeg', 1.0);
 			
-			            ws.send(convertToBinary(data));
+			            videoSocket.send(convertToBinary(data));
 			        }, 100);
 			
 			    function convertToBinary(dataURI) {
