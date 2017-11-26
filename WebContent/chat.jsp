@@ -209,7 +209,7 @@
                     + "/liveStreamAudio?class=" + "<%= courseName %>");
                 audioSocket.binaryType = 'arraybuffer';
 
-                videoSocket.onopen = function () {
+                audioSocket.onopen = function () {
                     console.log("Connection to websocket for audio");
                 };
 			
