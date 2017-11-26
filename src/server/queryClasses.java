@@ -60,9 +60,9 @@ public class queryClasses extends HttpServlet {
 						String prefix = courseDetail.getString("coursePrefix");
 						String number = courseDetail.getString("courseNumber");
 						String name = courseDetail.getString("courseName");
-
-						System.out.println("Queried: " + ID + " " + prefix + " " + number + " - " + name);
-						Course newCourse = new Course(ID, prefix, number, name);
+						String code = courseDetail.getString("accessCode");
+						System.out.println("Queried: " + ID + " " + prefix + " " + number + " - " + name + " " + code);
+						Course newCourse = new Course(ID, prefix, number, name, code);
 						courses.add(newCourse);
 					}
 				}
@@ -100,8 +100,9 @@ public class queryClasses extends HttpServlet {
 					String prefix = courseDetail.getString("coursePrefix");
 					String number = courseDetail.getString("courseNumber");
 					String name = courseDetail.getString("courseName");
-					System.out.println("Queried: " + ID + " " + prefix + " " + number + " - " + name);
-					Course newCourse = new Course(ID, prefix, number, name);
+					String code = courseDetail.getString("accessCode");
+					System.out.println("Queried: " + ID + " " + prefix + " " + number + " - " + name + " " + code);
+					Course newCourse = new Course(ID, prefix, number, name, code);
 					publicCourse.add(newCourse);
 				}
 			}
