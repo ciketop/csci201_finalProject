@@ -1,4 +1,4 @@
-<%--
+<%@ page import="config.ConfigString" %><%--
   Created by IntelliJ IDEA.
   User: HZJ
   Date: 11/25/2017
@@ -6,6 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    if (request.getSession().getAttribute("socketAddress") == null) {
+        request.getSession().setAttribute("socketAddress", ConfigString.socketAddress);
+    }
+%>
 <%--https://developers.google.com/web/fundamentals/media/recording-audio/--%>
 <html>
 <head>
