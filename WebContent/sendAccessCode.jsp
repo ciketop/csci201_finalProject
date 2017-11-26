@@ -55,12 +55,8 @@
 	  		<div class="col s12" id = "createBox">
 		  		<form name="sendEmailForm" method="POST" action="lectures.jsp" onsubmit="return sendEmail()">
 		  			<span id="err"></span>
-		  			<label class="col s12" id = "createLabel"><b>Email Address</b></label>
-		  			<div class="row"></div>
-	    				<input type="text" placeholder="Please enter the email address that you wish to send the access code" name="email" required>
-					
-	    				
-	    				<label class="col s12" id = "createLabel"><b>Classes</b></label>
+		  			
+		  			<label class="col s12" id = "createLabel"><b>Classes</b></label>
 	    				<div class="row"></div>
 	    				<select name="course">
 	    				<%
@@ -81,6 +77,15 @@
 	    					}
 	    				%>
 	    				</select>
+	    				<div class="row"></div>
+	    				
+		  			
+		  			<label class="col s12" id = "createLabel"><b>Email Address</b></label>
+		  			<div class="row"></div>
+	    				<input type="text" placeholder="Please enter the email address that you wish to send the access code" name="email" required>
+					
+	    				
+	    				
 					
 					<div class="row"></div>
 					
