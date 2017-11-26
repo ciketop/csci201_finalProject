@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="database.object.User" %>
+<%@ page import="config.ConfigString" %>
+<%
+	if (request.getSession().getAttribute("socketAddress") == null) {
+		request.getSession().setAttribute("socketAddress", ConfigString.socketAddress);
+	}
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -41,7 +47,7 @@
 			var socket;
 			function connectToServer(){
 				/* Create a new Websocket with the correct path, and parameter class */
-				socket = new WebSocket("ws://localhost:8080/" +
+				socket = new WebSocket("ws://${sessionScope.socketAddress}/" +
 			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/chatroom?class=" + "<%= courseName %>");
 
 				socket.onopen = function(event){
@@ -128,7 +134,7 @@
 			<script type="text/javascript">
 			    // to see live stream on another computer, change localhost:8080 to the ip address of that computer
 			    "use strict";
-			    let ws = new WebSocket("ws://localhost:8080/" +
+			    let ws = new WebSocket("ws://${sessionScope.socketAddress}/" +
 			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/liveStream?class=" + "<%= courseName %>"); 
 			    /* ws.send("course:" + courseName); */
 			    let target = document.getElementById("target");
@@ -161,10 +167,10 @@
 			    let canvas = document.getElementById("canvas");
 			    let ctx = canvas.getContext('2d');
 			
-			    console.log("ws://localhost:8080" +
+			    console.log("ws://${sessionScope.socketAddress}/" +
 			            "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
 			            + "/liveStream?class=" + "<%= courseName %>");
-			    let ws = new WebSocket("ws://localhost:8080/" +
+			    let ws = new WebSocket("ws://${sessionScope.socketAddress}/" +
 			        "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
 			        + "/liveStream?class=" + "<%= courseName %>"); 
 			    /* let ws = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStream"); */

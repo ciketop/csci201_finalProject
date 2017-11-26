@@ -30,7 +30,7 @@
     console.log("ws://localhost:8080" +
             "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
             + "/liveStream");
-    let ws = new WebSocket("ws://localhost:8080/" +
+    let ws = new WebSocket("ws://${sessionScope.socketAddress}/" +
         "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
         + "/liveStream"); 
     /* let ws = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStream"); */
