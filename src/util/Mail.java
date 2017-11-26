@@ -119,8 +119,8 @@ public class Mail {
     private class SMTPAuthenticator extends javax.mail.Authenticator {
         @Override
         public PasswordAuthentication getPasswordAuthentication() {
-            String username =  "sheldonismm@gmail.com";           
-            String password = "BBozbey1995";                     
+            String username =  "liveclassinc@gmail.com";           
+            String password = "liveclass123";                     
             return new PasswordAuthentication(username, password);
         }
   }

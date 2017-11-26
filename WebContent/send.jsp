@@ -18,5 +18,4 @@
 			break;
 		}
 	}
-%>		
-		Email sent!		
+%>	

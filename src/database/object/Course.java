@@ -71,12 +71,12 @@ public class Course {
 	}
 	
 	public void sendAccessCode(String email) {
-		String from = "sheldonismm@gmail.com";
-        String message = "Dear Student,\nYou are given permission to enroll in " + coursePrefix + " " 
+		String from = "liveclassinc@gmail.com";
+        String message = "Dear Student,\n\nYou are given permission to enroll in " + coursePrefix + " " 
         			+ courseNumber + " - " + courseName + "!\n\nHere's your access code: " + accessCode 
-        			+ "\nIn order to use the access code, please create an account if you haven't already, "
-        			+ "and enter the access code to complete your enrollment.\nThanks for choosing us!\n\n"
-        			+ "LiveClass Team.";
+        			+ "\n\nPlease create an account if you haven't already. Then you can "
+        			+ "use the access code to complete your enrollment.\n\nThanks for choosing us!\n\n"
+        			+ "LiveClass Team";
         String subject = "Welcome to LiveClass!";
         String smtp = "smtp.gmail.com";
         Mail mail = new Mail();

@@ -14,11 +14,10 @@
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   <script>
-  	function sendEmail() {
+  	function enroll() {
 		var xhttp = new XMLHttpRequest();
-		var email = document.sendEmailForm.email.value;
-		var id = document.sendEmailForm.course.value;
-     	xhttp.open("GET", "send.jsp?email="+email+"&courseID="+id, false);
+		var accesscode = document.enterAccessCodeForm.accesscode.value;
+     	xhttp.open("GET", "enroll.jsp?accesscode="+accesscode, false);
      	xhttp.send();
 	  	if (xhttp.responseText.trim().length > 0) {
 	  	  console.log("response: " + xhttp.responseText)
@@ -53,36 +52,13 @@
 	  	
 	  		
 	  		<div class="col s12" id = "createBox">
-		  		<form name="sendEmailForm" method="POST" action="queryClasses" onsubmit="return sendEmail()">
+		  		<form name="enterAccessCodeForm" method="POST" action="queryClasses" onsubmit="return enroll()">
 		  			<span id="err"></span>
-		  			
-		  			<label class="col s12" id = "createLabel"><b>Classes</b></label>
-	    				<div class="row"></div>
-	    				<select name="course">
-	    				<%
-	    					if(userCourses != null) {
-			                  for(int i = 0; i < userCourses.size(); i++) {
-			                     Course currCourse = userCourses.get(i);
-			                     int ID = currCourse.getCourseID();
-			                     String prefix = currCourse.getCoursePrefix();
-			                     String number = currCourse.getCourseNumber();
-			                     String name = currCourse.getCourseName();
-			                     String courseName = prefix+" "+number+" - "+name;
-			                     System.out.println("course " + courseName);
-	    				%>
-	    					<option value=<%= ID %>><%= courseName %></option>
-	    				<%
-			           		}
-	    						System.out.println("in sendAccessCode");
-	    					}
-	    				%>
-	    				</select>
-	    				<div class="row"></div>
 	    				
 		  			
-		  			<label class="col s12" id = "createLabel"><b>Email Address</b></label>
+		  			<label class="col s12" id = "createLabel"><b>Access Code</b></label>
 		  			<div class="row"></div>
-	    				<input type="text" placeholder="Please enter the email address that you wish to send the access code" name="email" required>
+	    				<input type="text" placeholder="Please enter the access code of the class" name="accesscode" required>
 					
 	    				
 	    				
@@ -91,7 +67,7 @@
 					
 					
 					<div class="col s12 push-s5">	
-	    				<button class="btn" id = "createButton" type="submit"><b>Send</b></button>
+	    				<button class="btn" id = "createButton" type="submit"><b>Enroll</b></button>
 	    				<input type="checkbox" checked="checked">
 	  				</div>
 	  			</form>
