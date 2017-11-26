@@ -17,8 +17,8 @@
 <script type="text/javascript">
     // to see live stream on another computer, change localhost:8080 to the ip address of that computer
     
-    let ws = new WebSocket("ws://localhost:8080/" +
-        "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/liveStream"); 
+    let ws = new WebSocket("ws://${sessionScope.socketAddress}/" +
+        "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}" + "/liveStreamVideo");
     let target = document.getElementById("target");
 
     ws.onmessage = function (msg) {

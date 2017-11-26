@@ -29,11 +29,11 @@
 
     console.log("ws://localhost:8080" +
             "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
-            + "/liveStream");
-    let ws = new WebSocket("ws://localhost:8080/" +
+            + "/liveStreamVideo");
+    let ws = new WebSocket("ws://${sessionScope.socketAddress}/" +
         "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
-        + "/liveStream"); 
-    /* let ws = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStream"); */
+        + "/liveStreamVideo");
+    /* let ws = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStreamVideo"); */
     
     ws.onopen = function () {
         console.log("Openened connection to websocket");
@@ -90,8 +90,8 @@
     
     let clientWs = new WebSocket("ws://localhost:8080" +
             "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
-            + "/liveStream"); 
-    /* let clientWs = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStream"); */
+            + "/liveStreamVideo");
+    /* let clientWs = new WebSocket("ws://192.168.50.166:8080/csci201_finalProject/liveStreamVideo"); */
 
     clientWs.onmessage = function (msg) {
         let url = URL.createObjectURL(msg.data);
