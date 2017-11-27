@@ -30,6 +30,24 @@
 				<ul class="right hide-on-med-and-down">
 				<li><a href="index.jsp" id="navBtns">Home</a></li>
 				<%
+					if(currUser != null) {
+						for(Course course : userCourses) {
+							if(currUser.getPriv(course.getCourseID()) == 1) { 
+				%>
+						<li><a href="sendAccessCode.jsp" id="navBtns">Access Code</a></li>
+				<%
+								break;
+							}
+						}
+						for(Course course : userCourses) {
+							if(currUser.getPriv(course.getCourseID()) == 2) {
+				%>
+						<li><a href="enterAccessCode.jsp" id="navBtns">Enroll</a></li>
+				<%
+								break;
+							}
+						}
+					}
 					if(currUser == null) {
 				%>
 						<li><a href="login.html" id="navBtns">Login</a></li>
@@ -41,6 +59,7 @@
 				<%
 					}
 				%>
+				
 					<!-- <li><a href="index.html" id="navBtns" class="waves-effect waves-light btn">Home</a></li>
 		        			<li><a href="login.html" id="navBtns" class="waves-effect waves-light btn">Login</a></li> -->
 				</ul>
