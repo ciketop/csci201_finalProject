@@ -29,17 +29,17 @@ public class SendDataParallel extends RecursiveAction {
 
                 return;
             }
+
+            SendDataParallel s1 = new SendDataParallel(sessions.subList(0, sessions.size() / 2), data, numElements);
+            SendDataParallel s2 = new SendDataParallel(sessions.subList(sessions.size() / 2, sessions.size()), data, numElements);
+
+            s1.fork();    // start task in parallel
+            s2.fork();
+
+            s1.join();
+            s2.join();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        SendDataParallel s1 = new SendDataParallel(sessions.subList(0, sessions.size() / 2), data, numElements);
-        SendDataParallel s2 = new SendDataParallel(sessions.subList(sessions.size() / 2, sessions.size()), data, numElements);
-
-        s1.fork();    // start task in parallel
-        s2.fork();
-
-        s1.join();
-        s2.join();
     }
 }
