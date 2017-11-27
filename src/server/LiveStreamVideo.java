@@ -63,7 +63,6 @@ public class LiveStreamVideo {
         }
 
         session.setMaxBinaryMessageBufferSize(1024 * 1024);
-        System.out.println(session.getId() + " - connected!");
         sessions.add(session);
     }
 

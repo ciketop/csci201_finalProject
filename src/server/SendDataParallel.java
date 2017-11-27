@@ -26,6 +26,8 @@ public class SendDataParallel extends RecursiveAction {
                 for (Session ss : sessions) {
                     ss.getBasicRemote().sendBinary(data);
                 }
+
+                return;
             }
         } catch (IOException e) {
             e.printStackTrace();
