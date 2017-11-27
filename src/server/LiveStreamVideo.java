@@ -5,11 +5,12 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.*;
+import java.util.concurrent.ForkJoinPool;
 
 @ServerEndpoint(value = "/liveStreamVideo")
 public class LiveStreamVideo {
     private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
-    private static Map<String, Vector<Session>> classMap = Collections.synchronizedMap(new HashMap<String, Vector<Session> >());
+    private static Map<String, Vector<Session>> classMap = Collections.synchronizedMap(new HashMap<String, Vector<Session>>());
 
     @OnMessage
     public void processVideo(byte[] imageData, Session session) {
@@ -21,11 +22,18 @@ public class LiveStreamVideo {
             String qString = session.getQueryString();
             String[] split = qString.split("class=");
             String courseName = split[1];
-            Vector<Session> connections = classMap.get(courseName);
+//            Vector<Session> connections = classMap.get(courseName);
             // Loop through the vector, send stream to all
-            for(Session s:connections) {
-                s.getBasicRemote().sendBinary(buffer);
-            }
+//            for(Session s:connections) {
+//                s.getBasicRemote().sendBinary(buffer);
+//            }
+            List<Session> connections = new ArrayList<>(classMap.get(courseName));
+            long numElements = connections.size() / Runtime.getRuntime().availableProcessors();
+            // do not send message back
+            connections.remove(session);
+            SendDataParallel st = new SendDataParallel(connections, buffer, numElements);
+            ForkJoinPool pool = new ForkJoinPool();
+            pool.invoke(st);
         } catch (Throwable ioe) {
             System.out.println("Error sending message " + ioe.getMessage());
         }
@@ -42,7 +50,7 @@ public class LiveStreamVideo {
         // Try and find the vector with the name as the key
         Vector<Session> connections = classMap.get(courseName);
         // If none found, create a new entry with the name
-        if(connections == null) {
+        if (connections == null) {
             System.out.println("adding class - " + courseName);
             Vector<Session> newConnections = new Vector<Session>();
             newConnections.add(session);
