@@ -140,6 +140,7 @@ public class GenericDAO<T> implements GenericDAOTemplate<T> {
                     field.setAccessible(true);
 
                     try {
+                    		System.out.println("GenericDAO: " + field.get(dataObject).toString());
                         ps.setString(++psParamIdx, field.get(dataObject).toString());
                     } catch (IllegalAccessException ex) {
                         ex.printStackTrace();

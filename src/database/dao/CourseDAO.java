@@ -192,14 +192,20 @@ public class CourseDAO implements Factory<Course>, CourseDAOInterface {
         
         List<Course> courses = findByAccessCode(accessCode);
         System.out.println("In enroll " + courses.size());
+        
         if(courses == null || courses.isEmpty())
         		return false;
+        
         CoursePrivilegeDAO coursePrivilegeDAO = new CoursePrivilegeDAO();
         List<CoursePrivilege> privileges = coursePrivilegeDAO.findByPrivilege(userID, courses.get(0).getCourseID(), 2);
         if(privileges != null && !privileges.isEmpty())
         		return true;
         privileges = new ArrayList<CoursePrivilege>();
-        CoursePrivilege coursePrivilege = new CoursePrivilege(userID, courses.get(0).getCourseID(), 2);
+        
+        System.out.println("userID: " + userID);
+        System.out.println("courseID: " + courses.get(0).getCourseID());
+        
+        CoursePrivilege coursePrivilege = new CoursePrivilege(courses.get(0).getCourseID(), userID, 2);
         privileges.add(coursePrivilege);
         return coursePrivilegeDAO.insertCoursePrivileges(privileges);
     }

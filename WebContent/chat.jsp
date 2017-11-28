@@ -151,7 +151,7 @@
 
 			    // audio -- read
                 let audioSocket = new WebSocket("ws://${sessionScope.socketAddress}/" +
-                    "${not empty pageContext.request.contextPath ? "/" + pageContext.request.contextPath: ""}"
+                    "${not empty pageContext.request.contextPath ?  pageContext.request.contextPath: ""}"
                     + "/liveStreamAudio?class=" + "<%= courseName %>");
                 audioSocket.binaryType = 'arraybuffer';
 
