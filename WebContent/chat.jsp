@@ -129,7 +129,7 @@
 	  	%>
 	  		<h4 id="h3Chat"><%= "Watching: " + courseName %></h4>
 		  	<div id="container">
-		    		<img id="target" style="display: inline;" src="${pageContext.request.contextPath}/asset/images/noVideo.jpg"/>
+		    		<img id="target" style="display: inline;" src="${pageContext.request.contextPath}/asset/images/noLivestream.jpg"/>
 			</div>
 			<script type="text/javascript">
 			    // to see live stream on another computer, change localhost:8080 to the ip address of that computer

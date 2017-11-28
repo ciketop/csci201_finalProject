@@ -7,7 +7,6 @@ import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ForkJoinPool;
 
 @ServerEndpoint(value = "/liveStreamVideoThreaded")
 public class LiveStreamVideoThreaded {
@@ -44,6 +43,9 @@ public class LiveStreamVideoThreaded {
                 executor.execute(new SendingThread(buffer, new Vector<>(connections.subList(i - offset, i))));
             }
             executor.shutdown();
+            while (!executor.isTerminated()) {
+                Thread.yield();
+            }
         } catch (Throwable ioe) {
             System.out.println("Error sending message " + ioe.getMessage());
         }

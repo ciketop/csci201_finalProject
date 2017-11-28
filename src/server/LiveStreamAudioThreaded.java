@@ -5,11 +5,13 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.*;
-import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 @ServerEndpoint(value = "/liveStreamAudioThreaded")
 public class LiveStreamAudioThreaded {
+    private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
     private static Map<String, Vector<Session>> classMap = Collections.synchronizedMap(new HashMap<String, Vector<Session>>());
 
     @OnMessage
@@ -20,16 +22,28 @@ public class LiveStreamAudioThreaded {
             String[] split = qString.split("class=");
             String courseName = split[1];
 
-            List<Session> connections = new ArrayList<>(classMap.get(courseName));
-            long numElements = connections.size() / Runtime.getRuntime().availableProcessors();
-            if (numElements < 1)
-                numElements = 1;
-            // do not send message back
+            Vector<Session> connections = new Vector<>(classMap.get(courseName));
+            // do not send message back to the sender
             connections.remove(session);
 
-            SendDataParallel st = new SendDataParallel(connections, audioData, numElements);
-            ForkJoinPool pool = new ForkJoinPool();
-            pool.invoke(st);
+            if (connections.isEmpty()) {
+                return;
+            }
+
+            int numThreads = connections.size() / Runtime.getRuntime().availableProcessors();
+            if (numThreads < 1)
+                numThreads = 1;
+
+            ExecutorService executor = Executors.newFixedThreadPool(3);
+            for (int i = 1; i <= numThreads; ++i) {
+                int offset = numThreads / 8;
+                offset = offset <= 0 ? 1 : offset;
+                executor.execute(new SendingThread(audioData, new Vector<>(connections.subList(i - offset, i))));
+            }
+            executor.shutdown();
+            while (!executor.isTerminated()) {
+                Thread.yield();
+            }
         } catch (Throwable ioe) {
             System.out.println("Error sending message " + ioe.getMessage());
         }
@@ -59,6 +73,7 @@ public class LiveStreamAudioThreaded {
         }
 
         session.setMaxBinaryMessageBufferSize(4096 * 1024);
+        sessions.add(session);
     }
 
     @OnError
@@ -69,6 +84,10 @@ public class LiveStreamAudioThreaded {
 
     @OnClose
     public void whenClosing(Session session) {
+        // Remove session from vector containing all the sessions
+        System.out.println("Session " + session.getId() + " disconnected!");
+        sessions.remove(session);
+
         // Find the session in the map and remove it
         String qString = session.getQueryString();
         String[] split = qString.split("class=");
