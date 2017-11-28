@@ -127,7 +127,7 @@
 	  		// Disaply stream if user has privilege of 2(student or guest)
 	  		if(priv == 2) {
 	  	%>
-	  		<h4 id="h3Chat"><%= courseName %></h4>
+	  		<h4 id="h3Chat"><%= "Watching: " + courseName %></h4>
 		  	<div id="container">
 		    		<img id="target" style="display: inline;"/>
 			</div>
@@ -178,7 +178,7 @@
 	  		// If privilege is 1 (instructor), record stream instead
 	  		else if(priv == 1) {
 		%>
-			<h4 id="h3Chat"><%= courseName %></h4>
+			<h4 id="h3Chat"><%= "Recording: " + courseName %></h4>
 			<div id="videoContainer">
 			    
 			    <video id="live"  autoplay="autoplay"
@@ -205,7 +205,7 @@
 			    };
 
                 let audioSocket = new WebSocket("ws://${sessionScope.socketAddress}/" +
-                    "${not empty pageContext.request.contextPath ? "/" + pageContext.request.contextPath: ""}"
+                    "${not empty pageContext.request.contextPath ? pageContext.request.contextPath: ""}"
                     + "/liveStreamAudio?class=" + "<%= courseName %>");
                 audioSocket.binaryType = 'arraybuffer';
 

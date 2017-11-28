@@ -99,10 +99,10 @@
 		                     String number = currCourse.getCourseNumber();
 		                     String name = currCourse.getCourseName();
 		                     String courseName = prefix + "-" + number;
-		                     
+		                     int priv = currUser.getPriv(ID);
 		               %>
 		                  <tr>
-		                     <td><a href="chat.jsp?course=<%=courseName%>&id=<%=ID%>"><%= prefix+" "+number+" - "+name %></a></td>
+		                     <td><a href="chat.jsp?course=<%=courseName%>&id=<%=ID%>"><span <%= priv == 1 ? "class=\"red\"" : "" %>><%= prefix+" "+number+" - "+name %></span></a></td>
 		                  </tr>
 		               <%
 		                  }
