@@ -32,15 +32,16 @@ public class LiveStreamVideoThreaded {
                 return;
             }
 
-            int numThreads = connections.size() / Runtime.getRuntime().availableProcessors();
-            if (numThreads < 1)
-                numThreads = 1;
+            int step = connections.size() / Runtime.getRuntime().availableProcessors();
+            if (step < 1)
+                step = 1;
 
             ExecutorService executor = Executors.newFixedThreadPool(3);
-            for (int i = 1; i <= numThreads; ++i) {
-                int offset = numThreads / 8;
-                offset = offset <= 0 ? 1 : offset;
-                executor.execute(new SendingThread(buffer, new Vector<>(connections.subList(i - offset, i))));
+            for (int i = step, startIdx = 0; i <= connections.size(); i += step) {
+                executor.execute(
+                        new SendingThread(buffer, new Vector<>(connections.subList(startIdx, i)))
+                );
+                startIdx = i;
             }
             executor.shutdown();
             while (!executor.isTerminated()) {
