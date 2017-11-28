@@ -31,6 +31,11 @@
 				<li><a href="index.jsp" id="navBtns">Home</a></li>
 				<%
 					if(currUser != null) {
+						if(userCourses.size() == 0) {
+				%>			
+						<li><a href="enterAccessCode.jsp" id="navBtns">Enroll</a></li>	
+				<%			
+						}
 						for(Course course : userCourses) {
 							if(currUser.getPriv(course.getCourseID()) == 1) { 
 				%>
