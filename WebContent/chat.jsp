@@ -231,7 +231,7 @@
 			            let data = canvas.toDataURL('image/jpeg', 1.0);
 			
 			            videoSocket.send(convertToBinary(data));
-			        }, 100);
+			        }, 1000/30);
 			
 			    function convertToBinary(dataURI) {
 			        // convert base64 to raw binary data held in a string

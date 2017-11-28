@@ -39,7 +39,9 @@ public class LiveStreamVideoThreaded {
 
             ExecutorService executor = Executors.newFixedThreadPool(3);
             for (int i = 1; i <= numThreads; ++i) {
-                executor.execute(new SendingThread(buffer, new Vector<>(connections.subList(i - numThreads/8, i))));
+                int offset = numThreads / 8;
+                offset = offset <= 0 ? 1 : offset;
+                executor.execute(new SendingThread(buffer, new Vector<>(connections.subList(i - offset, i))));
             }
             executor.shutdown();
         } catch (Throwable ioe) {
