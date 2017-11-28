@@ -36,7 +36,7 @@ public class LiveStreamVideoThreaded {
             if (step < 1)
                 step = 1;
 
-            ExecutorService executor = Executors.newFixedThreadPool(3);
+            ExecutorService executor = Executors.newFixedThreadPool(connections.size());
             for (int i = step, startIdx = 0; i <= connections.size(); i += step) {
                 executor.execute(
                         new SendingThread(buffer, new Vector<>(connections.subList(startIdx, i)))
