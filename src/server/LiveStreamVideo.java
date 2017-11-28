@@ -23,7 +23,7 @@ public class LiveStreamVideo {
             String[] split = qString.split("class=");
             String courseName = split[1];
 
-            List<Session> connections = new ArrayList<>(classMap.get(courseName));
+            List<Session> connections = new Vector<>(classMap.get(courseName));
             long numElements = connections.size() / Runtime.getRuntime().availableProcessors();
             if (numElements < 1)
                 numElements = 1;
@@ -74,7 +74,7 @@ public class LiveStreamVideo {
     @OnClose
     public void whenClosing(Session session) {
         // Remove session from vector containing all the sessions
-        System.out.println("Session " + session.getId() + " disconnected!");
+        System.out.println("Sessiom" + session.getId() + " Disconnected!");
         sessions.remove(session);
 
         // Find the session in the map and remove it

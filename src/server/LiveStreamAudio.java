@@ -21,7 +21,7 @@ public class LiveStreamAudio {
             String[] split = qString.split("class=");
             String courseName = split[1];
 
-            List<Session> connections = new ArrayList<>(classMap.get(courseName));
+            List<Session> connections = new Vector<>(classMap.get(courseName));
             long numElements = connections.size() / Runtime.getRuntime().availableProcessors();
             if (numElements < 1)
                 numElements = 1;
