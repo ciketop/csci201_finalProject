@@ -7,15 +7,16 @@ import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 
-
-@ServerEndpoint(value = "/liveStreamAudio")
-public class LiveStreamAudio {
-    private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
+@ServerEndpoint(value = "/liveStreamVideoThreaded")
+public class LiveStreamVideoThreaded {
     private static Map<String, Vector<Session>> classMap = Collections.synchronizedMap(new HashMap<String, Vector<Session>>());
 
     @OnMessage
-    public void processAudio(ByteBuffer audioData, Session session) {
+    public void processVideo(byte[] imageData, Session session) {
         try {
+            // Wrap a byte array into a buffer
+            ByteBuffer buffer = ByteBuffer.wrap(imageData);
+
             // Find the vector containing all the users in the current class
             String qString = session.getQueryString();
             String[] split = qString.split("class=");
@@ -28,7 +29,7 @@ public class LiveStreamAudio {
             // do not send message back
             connections.remove(session);
 
-            SendDataParallel st = new SendDataParallel(connections, audioData, numElements);
+            SendDataParallel st = new SendDataParallel(connections, buffer, numElements);
             ForkJoinPool pool = new ForkJoinPool();
             pool.invoke(st);
         } catch (Throwable ioe) {
@@ -49,7 +50,7 @@ public class LiveStreamAudio {
         // If none found, create a new entry with the name
         if (connections == null) {
             System.out.println("adding class - " + courseName);
-            Vector<Session> newConnections = new Vector<>();
+            Vector<Session> newConnections = new Vector<Session>();
             newConnections.add(session);
             classMap.put(courseName, newConnections);
         }
@@ -59,8 +60,7 @@ public class LiveStreamAudio {
             connections.add(session);
         }
 
-        session.setMaxBinaryMessageBufferSize(4096 * 1024);
-        sessions.add(session);
+        session.setMaxBinaryMessageBufferSize(1024 * 1024);
     }
 
     @OnError
@@ -71,10 +71,6 @@ public class LiveStreamAudio {
 
     @OnClose
     public void whenClosing(Session session) {
-        // Remove session from vector containing all the sessions
-        System.out.println("Session " + session.getId() + " disconnected!");
-        sessions.remove(session);
-
         // Find the session in the map and remove it
         String qString = session.getQueryString();
         String[] split = qString.split("class=");

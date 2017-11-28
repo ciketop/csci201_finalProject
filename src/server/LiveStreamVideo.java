@@ -9,6 +9,7 @@ import java.util.concurrent.ForkJoinPool;
 
 @ServerEndpoint(value = "/liveStreamVideo")
 public class LiveStreamVideo {
+    private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
     private static Map<String, Vector<Session>> classMap = Collections.synchronizedMap(new HashMap<String, Vector<Session>>());
 
     @OnMessage
@@ -61,6 +62,7 @@ public class LiveStreamVideo {
         }
 
         session.setMaxBinaryMessageBufferSize(1024 * 1024);
+        sessions.add(session);
     }
 
     @OnError
@@ -71,6 +73,10 @@ public class LiveStreamVideo {
 
     @OnClose
     public void whenClosing(Session session) {
+        // Remove session from vector containing all the sessions
+        System.out.println("Session " + session.getId() + " disconnected!");
+        sessions.remove(session);
+
         // Find the session in the map and remove it
         String qString = session.getQueryString();
         String[] split = qString.split("class=");

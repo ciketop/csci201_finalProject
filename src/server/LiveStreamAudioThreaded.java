@@ -8,9 +8,8 @@ import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 
 
-@ServerEndpoint(value = "/liveStreamAudio")
-public class LiveStreamAudio {
-    private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
+@ServerEndpoint(value = "/liveStreamAudioThreaded")
+public class LiveStreamAudioThreaded {
     private static Map<String, Vector<Session>> classMap = Collections.synchronizedMap(new HashMap<String, Vector<Session>>());
 
     @OnMessage
@@ -60,7 +59,6 @@ public class LiveStreamAudio {
         }
 
         session.setMaxBinaryMessageBufferSize(4096 * 1024);
-        sessions.add(session);
     }
 
     @OnError
@@ -71,10 +69,6 @@ public class LiveStreamAudio {
 
     @OnClose
     public void whenClosing(Session session) {
-        // Remove session from vector containing all the sessions
-        System.out.println("Session " + session.getId() + " disconnected!");
-        sessions.remove(session);
-
         // Find the session in the map and remove it
         String qString = session.getQueryString();
         String[] split = qString.split("class=");
